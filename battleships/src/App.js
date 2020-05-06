@@ -2,23 +2,27 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
+import HomePage from "./components/pages/HomePage";
+import GamePage from "./components/pages/GamePage";
+import SettingsPage from "./components/pages/SettingsPage";
+
+import {HOME_PATH, GAME_PATH, SETTINGS_PATH} from "./helpers/pathHelper";
+
+import {Route} from "react-router-dom";
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+
+      <Route path={HOME_PATH} exact strict component={HomePage}/>
+      <Route path={GAME_PATH} exact strict component={GamePage}/>
+      <Route path={SETTINGS_PATH} exact strict component={SettingsPage}/>
+
+      <Footer/>
     </div>
   );
 }
