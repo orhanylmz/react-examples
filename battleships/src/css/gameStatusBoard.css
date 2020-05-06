@@ -1,0 +1,92 @@
+.gameStatusBoard {
+    padding-top: 30px;
+    grid-template-columns: auto auto auto auto;
+}
+
+.admiral-board {
+    padding-top: 15px;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto auto;
+    background-color: white;
+    width: 150px;
+    margin: auto;
+    height: 90px;
+}
+
+.kreuzer-boards {
+    padding-top: 15px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+    background-color: white;
+    width: 500px;
+    margin: auto;
+    height: 45px;
+}
+
+.kreuzer-board {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto auto;
+    background-color: white;
+    width: 150px;
+    margin: auto;
+}
+
+.destroyer-boards {
+    padding-top: 15px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto auto;
+    background-color: white;
+    width: 500px;
+    margin: auto;
+    height: 45px;
+}
+
+.destroyer-board {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+    background-color: white;
+    width: 100px;
+    margin: auto;
+}
+
+.boat-boards {
+    padding-top: 15px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto auto auto;
+    background-color: white;
+    width: 500px;
+    margin: auto;
+    height: 45px;
+}
+
+.boat-board {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    background-color: white;
+    width: 50px;
+    margin: auto;
+}
+
+.ship-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid black;
+    text-align: center;
+    font-size: 30px;
+    width: 50px;
+    height: 45px;
+}
+
+.ship-item-no-border {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 30px;
+    width: 50px;
+    height: 45px;
+}

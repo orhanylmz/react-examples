@@ -1,0 +1,41 @@
+.gameBoards {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    height: 450px;
+}
+
+.gameBoard-left {
+    display: grid;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    background-color: white;
+    width: 500px;
+    padding-right: 150px;
+}
+
+.gameBoard-right {
+    display: grid;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    background-color: white;
+    width: 500px;
+    padding-left: 150px;
+}
+
+.game-button {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid black;
+    text-align: center;
+    font-size: 30px;
+    width: 50px;
+    height: 45px;
+}
+
+.game-button-no-border {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 30px;
+    width: 50px;
+    height: 45px;
+}
