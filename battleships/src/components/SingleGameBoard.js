@@ -8,75 +8,85 @@ class SingleGameBoard extends Component {
 
     state = {
         board: [],
-        count: 0,
-        moveList: []
-    }
-
-    componentDidMount() {
-        this.setState({
-            board: this.props.singleBoard
-        })
+        moveList: [],
+        loaded: false
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
+        console.log(nextProps);
         this.setState({
-            board: nextProps.singleBoard
+            board: nextProps.board,
+            moveList: nextProps.moveOrder !== this.props.moveOrder ? [] : this.state.moveList
         })
     }
 
-    onClick = value => e => {
+    setMoveOrder = (item, moveList) => {
+        let founded = moveList.find(moveItem => moveItem.i === item.i && moveItem.j === item.j);
+        if (founded) {
+            return {
+                ...item,
+                moveOrder: this.props.moveOrder
+            }
+        }
+        if (item.moveOrder === this.props.moveOrder) {
+            return {
+                ...item,
+                moveOrder: null
+            }
+        }
+        return item;
+    }
+
+    onClick = (i, j) => e => {
         e.preventDefault();
-
-        if (!value.border) {
-            return;
-        }
-
-        if (value.currentValue) {
-            return;
-        }
 
         const {board, moveList} = this.state;
 
-        if (moveList.length >= 3) {
+        const clickedValue = board.flat().find(item => item.i === i && item.j === j);
+        if (clickedValue && clickedValue.moveOrder && clickedValue.moveOrder !== this.props.moveOrder){
             return;
         }
 
-        const newBoard = board.map(line => line.map(item => {
-            return {
-                ...item,
-                currentValue: item === value ? Math.floor(this.state.count / 3) + 1 : item.currentValue
-            }
-        }));
+        let foundValue = moveList.find(item => item.i === i && item.j === j);
+        if (foundValue) {
+            moveList.splice(moveList.indexOf(foundValue, 0), 1);
+        } else if (moveList.length < 3) {
+            moveList.push({
+                i: i,
+                j: j
+            });
+        }
 
-        moveList[moveList.length] = {
-            i: value.i,
-            j: value.j
-        };
+        const newBoard = board.map(line => line.map(item => {
+            return this.setMoveOrder(item, moveList);
+        }));
 
         this.setState({
             board: newBoard,
-            count: this.state.count + 1,
             moveList: moveList
-        })
+        });
 
-        if (moveList.length === 3){
+        if (moveList.length === 3 && !this.state.loaded) {
+            this.props.addMoveList(moveList, newBoard);
             this.setState({
-                moveList: []
-            })
-            this.props.addMoveList(moveList);
+                loaded: true
+            });
+        } else if (moveList.length !== 3 && this.state.loaded) {
+            this.props.removeMoveList(newBoard);
+            this.setState({
+                loaded: false
+            });
         }
     }
 
     render() {
         const {board} = this.state;
-     //   console.log(this.props.addMoveList);
-       // console.log(board);
         return (
             <div className={"gameBoard"}>
                 {
                     board.map(line => line.map(
                         value =>
-                            <CustomButton key={Math.random()} value={value} onClick={this.onClick(value)}/>
+                            <CustomButton key={Math.random()} value={value} onClick={this.onClick}/>
                     ))
                 }
             </div>
@@ -85,8 +95,7 @@ class SingleGameBoard extends Component {
 };
 
 SingleGameBoard.propTypes = {
-    className: PropTypes.string.isRequired,
-    singleBoard: PropTypes.array.isRequired
+    board: PropTypes.array.isRequired
 };
 
 export default SingleGameBoard;

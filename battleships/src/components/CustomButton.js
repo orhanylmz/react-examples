@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 
 const CustomButton = ({value, onClick}) => {
     return (
-        <div>
-            <div
-                className={value.border ? "game-button" : "game-button-no-border"}
-                onClick={onClick}>
-                {value.currentValue}
-            </div>
+        <div
+            className={"game-button"}
+            onClick={onClick(value.i, value.j)}>
+            {value.moveOrder}
         </div>
     );
 };
 
-CustomButton.propTypes = {
-    
-};
+CustomButton.propTypes = {};
 
 export default CustomButton;

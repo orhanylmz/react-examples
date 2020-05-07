@@ -1,5 +1,3 @@
-import board from "../reducers/board";
-
 export const LOAD_GAME = 'LOAD_GAME';
 export const ON_CLICK = 'ON_CLICK';
 
