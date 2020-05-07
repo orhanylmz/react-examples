@@ -1,5 +1,5 @@
 .gameStatusBoard {
-    margin-top: 70px;
+    margin-top: 40px;
     grid-template-columns: auto auto auto auto;
 }
 

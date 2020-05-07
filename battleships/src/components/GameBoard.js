@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SingleGameBoard from "./SingleGameBoard";
 import GameStatusBoard from "./GameStatusBoard";
+import MoveBoard from "./MoveBoard";
 
 const findValue = (i, j) => {
     return {
@@ -13,7 +14,7 @@ const findValue = (i, j) => {
     };
 }
 
-const singleBoard = [
+const singleBoard = () =>  [
     [findValue(0,0), findValue(1,0), findValue(2,0), findValue(3,0), findValue(4,0), findValue(5,0), findValue(6,0), findValue(7,0), findValue(8,0), findValue(9,0), findValue(10,0)],
     [findValue(0,1), findValue(1,1), findValue(2,1), findValue(3,1), findValue(4,1), findValue(5,1), findValue(6,1), findValue(7,1), findValue(8,1), findValue(9,1), findValue(10,1)],
     [findValue(0,2), findValue(1,2), findValue(2,2), findValue(3,2), findValue(4,2), findValue(5,2), findValue(6,2), findValue(7,2), findValue(8,2), findValue(9,2), findValue(10,2)],
@@ -27,14 +28,53 @@ const singleBoard = [
     [findValue(0,10), findValue(1,10), findValue(2,10), findValue(3,10), findValue(4,10), findValue(5,10), findValue(6,10), findValue(7,10), findValue(8,10), findValue(9,10), findValue(10,10)]];
 
 class GameBoard extends Component {
-    state = {};
+    state = {
+        mineBoard: singleBoard(),
+        otherBoard: singleBoard(),
+        moveList: [],
+        moveCount: 0
+    };
+
+    addMoveList = moveList => {
+        const {mineBoard, moveCount} = this.state;
+
+        const newMineBoard = mineBoard.map(line => line.map(item => {
+            return {
+                ...item,
+                currentValue: moveList.find(move => move.i === item.i && move.j === item.j) ? moveCount + 1 : item.currentValue
+            }
+        }));
+
+        this.setState({
+            mineBoard: newMineBoard,
+            moveList: moveList,
+            moveCount: this.state.moveCount + 1
+        });
+    }
+
+    move = () => {
+        const {otherBoard, moveList, moveCount} = this.state;
+
+        const newOtherBoard = otherBoard.map(line => line.map(item => {
+            return {
+                ...item,
+                currentValue: moveList.find(move => move.i === item.i && move.j === item.j) ? moveCount : item.currentValue
+            }
+        }));
+
+        this.setState({
+            otherBoard : newOtherBoard
+        });
+    }
 
     render() {
+        console.log(this.state.otherBoard);
         return (
             <div>
                 <div className="gameBoards">
-                    <SingleGameBoard className={"mine"} singleBoard={singleBoard}/>
-                    <SingleGameBoard className={"other"} singleBoard={singleBoard}/>
+                    <SingleGameBoard singleBoard={this.state.mineBoard} addMoveList={this.addMoveList}/>
+                    <MoveBoard move={this.move}/>
+                    <SingleGameBoard singleBoard={this.state.otherBoard}/>
                 </div>
                 <GameStatusBoard/>
             </div>

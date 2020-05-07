@@ -5,17 +5,24 @@ import '../css/gameBoard.css';
 import CustomButton from "./CustomButton";
 
 class SingleGameBoard extends Component {
+
     state = {
         board: [],
-        count: 0
+        count: 0,
+        moveList: []
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setState({
             board: this.props.singleBoard
         })
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.setState({
+            board: nextProps.singleBoard
+        })
+    }
 
     onClick = value => e => {
         e.preventDefault();
@@ -28,7 +35,12 @@ class SingleGameBoard extends Component {
             return;
         }
 
-        const {board} = this.state;
+        const {board, moveList} = this.state;
+
+        if (moveList.length >= 3) {
+            return;
+        }
+
         const newBoard = board.map(line => line.map(item => {
             return {
                 ...item,
@@ -36,20 +48,35 @@ class SingleGameBoard extends Component {
             }
         }));
 
+        moveList[moveList.length] = {
+            i: value.i,
+            j: value.j
+        };
+
         this.setState({
             board: newBoard,
-            count: this.state.count + 1
+            count: this.state.count + 1,
+            moveList: moveList
         })
+
+        if (moveList.length === 3){
+            this.setState({
+                moveList: []
+            })
+            this.props.addMoveList(moveList);
+        }
     }
 
     render() {
         const {board} = this.state;
+     //   console.log(this.props.addMoveList);
+       // console.log(board);
         return (
-            <div className={this.props.className}>
+            <div className={"gameBoard"}>
                 {
                     board.map(line => line.map(
                         value =>
-                            <CustomButton value={value} onClick={this.onClick(value)}/>
+                            <CustomButton key={Math.random()} value={value} onClick={this.onClick(value)}/>
                     ))
                 }
             </div>
