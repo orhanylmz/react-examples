@@ -1,26 +1,26 @@
 .gameBoards {
     display: grid;
     grid-template-columns: auto auto;
-    justify-content: center;
     height: 450px;
+    margin: auto;
 }
 
-.gameBoard-left {
+.mine {
     display: grid;
-    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
-    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto;
     background-color: white;
     width: 500px;
-    padding-right: 150px;
+    margin: auto;
 }
 
-.gameBoard-right {
+.other {
     display: grid;
-    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
-    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto;
     background-color: white;
     width: 500px;
-    padding-left: 150px;
+    margin: auto;
 }
 
 .game-button {
