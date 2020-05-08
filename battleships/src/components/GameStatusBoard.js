@@ -9,23 +9,24 @@ import Boat from "./ships/Boat";
 import '../css/gameStatusBoard.css'
 
 const GameStatusBoard = props => {
+
     return (
         <div className={"gameStatusBoard"}>
-            <Admiral/>
+            <Admiral onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({admiral: true})}/>
             <div className={"kreuzer-boards"}>
-                <Kreuzer/>
-                <Kreuzer/>
+                <Kreuzer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({kreuzer: true})}/>
+                <Kreuzer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({kreuzer: true})}/>
             </div>
             <div className={"destroyer-boards"}>
-                <Destroyer/>
-                <Destroyer/>
-                <Destroyer/>
+                <Destroyer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({destroyer: true})}/>
+                <Destroyer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({destroyer: true})}/>
+                <Destroyer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({destroyer: true})}/>
             </div>
             <div className={"boat-boards"}>
-                <Boat/>
-                <Boat/>
-                <Boat/>
-                <Boat/>
+                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
+                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
+                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
+                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
             </div>
         </div>
     );

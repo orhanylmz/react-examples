@@ -5,7 +5,7 @@ const Boat = props => {
     return (
         <div>
             <div className={"boat-board"}>
-                <div className={"ship-item"}></div>
+                <div className={"ship-item ship-item-boat"} onClick={props.onClickStatusBoard}></div>
             </div>
         </div>
     );

@@ -6,12 +6,12 @@ import '../../css/gameStatusBoard.css'
 const Admiral = props => {
     return (
         <div className={"admiral-board"}>
-            <div className={"ship-item-no-border"}></div>
-            <div className={"ship-item"}></div>
-            <div className={"ship-item-no-border"}></div>
-            <div className={"ship-item"}></div>
-            <div className={"ship-item"}></div>
-            <div className={"ship-item"}></div>
+            <div></div>
+            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
+            <div></div>
+            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
+            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
+            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
         </div>
     );
 };

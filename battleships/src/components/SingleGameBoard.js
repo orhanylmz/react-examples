@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import '../css/gameBoard.css';
 
-import CustomButton from "./CustomButton";
+import GameBoardButton from "./GameBoardButton";
 
 class SingleGameBoard extends Component {
 
@@ -86,7 +86,7 @@ class SingleGameBoard extends Component {
                 {
                     board.map(line => line.map(
                         value =>
-                            <CustomButton key={Math.random()} value={value} onClick={this.onClick}/>
+                            <GameBoardButton key={Math.random()} value={value} onClick={this.onClick}/>
                     ))
                 }
             </div>

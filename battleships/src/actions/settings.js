@@ -4,6 +4,7 @@ export const INITIAL_BOARD = 'INITIAL_BOARD';
 export const SET_SHIPS = 'SET_SHIPS';
 export const MOVE = 'MOVE';
 
+
 export function initialSettingsBoard() {
     return dispatch => {
         dispatch({

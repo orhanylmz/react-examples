@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CustomButton = ({value, onClick}) => {
+const GameBoardButton = ({value, onClick}) => {
     return (
         <div
             className={"game-button"}
@@ -11,6 +11,6 @@ const CustomButton = ({value, onClick}) => {
     );
 };
 
-CustomButton.propTypes = {};
+GameBoardButton.propTypes = {};
 
-export default CustomButton;
+export default GameBoardButton;

@@ -17,6 +17,10 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 board: action.payload.board,
+                admiral: action.payload.admiral,
+                kreuzers: action.payload.kreuzers,
+                destroyers: action.payload.destroyers,
+                boats: action.payload.boats
             }
         case SET_SHIPS:
             return {
@@ -24,7 +28,7 @@ export default (state = initialState, action) => {
                 admiral: action.payload.admiral,
                 kreuzers: action.payload.kreuzers,
                 destroyers: action.payload.destroyers,
-                boats: action.payload.boats
+                boats: action.payload.boats,
             }
         case MOVE:
             return {
