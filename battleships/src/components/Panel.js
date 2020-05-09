@@ -24,6 +24,9 @@ const Panel = ({panel, onClickBoard}) => {
     );
 };
 
-Panel.propTypes = {};
+Panel.propTypes = {
+    panel: PropTypes.array.isRequired,
+    onClickBoard: PropTypes.func.isRequired
+};
 
 export default Panel;

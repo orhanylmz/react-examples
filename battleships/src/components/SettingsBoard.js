@@ -31,12 +31,6 @@ class SettingsBoard extends Component {
         })
     }
 
-    rrrrrrr = button => e => {
-        e.preventDefault();
-        const {gameBoard} = this.props.board;
-        this.props.onClick(gameBoard, button, e.nativeEvent.type === 'contextmenu');
-    }
-
     onClickSettingsBoard = e => {
         e.preventDefault();
 
@@ -125,8 +119,6 @@ class SettingsBoard extends Component {
     createGame = () => {
         const {panel} = this.state;
         const shipParts = panel.flat().filter(item => item.sourceName);
-
-        console.log(shipParts.length);
 
         if (shipParts.length < 20) {
             this.setState({
