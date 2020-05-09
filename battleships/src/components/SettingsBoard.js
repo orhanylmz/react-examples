@@ -21,7 +21,8 @@ class SettingsBoard extends Component {
         boats: [],
         error: null,
         done: false,
-        selected: null
+        selectedName: null,
+        selectedId: null
     }
 
     componentDidMount() {
@@ -30,20 +31,58 @@ class SettingsBoard extends Component {
         })
     }
 
+    rrrrrrr = button => e => {
+        e.preventDefault();
+        const {gameBoard} = this.props.board;
+        this.props.onClick(gameBoard, button, e.nativeEvent.type === 'contextmenu');
+    }
+
     onClickSettingsBoard = e => {
-        if (!this.state.selected) {
-            return;
-        }
+        e.preventDefault();
 
         const i = e.target.getAttribute('i');
         const j = e.target.getAttribute('j');
+
+        if (e.nativeEvent.type === 'contextmenu') {
+            //right click
+            const sourceId = e.target.getAttribute('sourceId');
+            if (!sourceId) {
+                return;
+            }
+            const sourceName = e.target.getAttribute('sourceName');
+            document.getElementById(sourceId).className = findClassName(sourceName);
+
+            const {panel} = this.state;
+            const newPanel = panel.map(line => line.map(item => {
+                if (item.i == i && item.j == j) {
+                    return {
+                        ...item,
+                        sourceName: null,
+                        sourceId: null
+                    }
+                } else {
+                    return item;
+                }
+            }))
+
+            this.setState({
+                panel: newPanel,
+            })
+
+            return;
+        }
+
+        if (!this.state.selectedName) {
+            return;
+        }
 
         const {panel} = this.state;
         const newPanel = panel.map(line => line.map(item => {
             if (item.i == i && item.j == j) {
                 return {
                     ...item,
-                    selected: this.state.selected
+                    sourceName: this.state.selectedName,
+                    sourceId: this.state.selectedId
                 }
             } else {
                 return item;
@@ -52,23 +91,40 @@ class SettingsBoard extends Component {
 
         this.setState({
             panel: newPanel,
-            selected: null
+            selectedName: null,
+            selectedId: null
         })
     }
 
     onClickStatusBoard = e => {
-        if (this.state.selected) {
+        e.preventDefault();
+
+        if (e.nativeEvent.type === 'contextmenu') {
+            if (e.target.id !== this.state.selectedId) {
+                return;
+            }
+            e.target.className = findClassName(e.target.getAttribute('name'));
+            this.setState({
+                selectedName: null,
+                selectedId: null
+            });
             return;
         }
+
+        if (this.state.selectedName) {
+            const {selectedId, selectedName} = this.state;
+            document.getElementById(selectedId).className = findClassName(selectedName);
+        }
         this.setState({
-            selected: e.target.getAttribute('name')
+            selectedName: e.target.getAttribute('name'),
+            selectedId: e.target.id
         });
         e.target.className = EMPTY;
     }
 
     createGame = () => {
         const {panel} = this.state;
-        const shipParts = panel.flat().filter(item => item.selected);
+        const shipParts = panel.flat().filter(item => item.selectedName);
         if (shipParts.length < 20) {
             this.setState({
                 error: "Please set another ships"
@@ -76,16 +132,16 @@ class SettingsBoard extends Component {
             return;
         }
 
-        const admiral = shipParts.filter(part => part.selected === "admiral");
-        const kreuzer1 = shipParts.filter(part => part.selected === "kreuzer-1");
-        const kreuzer2 = shipParts.filter(part => part.selected === "kreuzer-2");
-        const destroyer1 = shipParts.filter(part => part.selected === "destroyer-1");
-        const destroyer2 = shipParts.filter(part => part.selected === "destroyer-2");
-        const destroyer3 = shipParts.filter(part => part.selected === "destroyer-3");
-        const boat1 = shipParts.filter(part => part.selected === "boat-1");
-        const boat2 = shipParts.filter(part => part.selected === "boat-2");
-        const boat3 = shipParts.filter(part => part.selected === "boat-3");
-        const boat4 = shipParts.filter(part => part.selected === "boat-4");
+        const admiral = shipParts.filter(part => part.selectedName === "admiral");
+        const kreuzer1 = shipParts.filter(part => part.selectedName === "kreuzer-1");
+        const kreuzer2 = shipParts.filter(part => part.selectedName === "kreuzer-2");
+        const destroyer1 = shipParts.filter(part => part.selectedName === "destroyer-1");
+        const destroyer2 = shipParts.filter(part => part.selectedName === "destroyer-2");
+        const destroyer3 = shipParts.filter(part => part.selectedName === "destroyer-3");
+        const boat1 = shipParts.filter(part => part.selectedName === "boat-1");
+        const boat2 = shipParts.filter(part => part.selectedName === "boat-2");
+        const boat3 = shipParts.filter(part => part.selectedName === "boat-3");
+        const boat4 = shipParts.filter(part => part.selectedName === "boat-4");
 
         this.props.setShips(
             {

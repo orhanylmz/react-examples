@@ -5,8 +5,8 @@ const Destroyer = props => {
     return (
         <div>
             <div className={"destroyer-board"}>
-                <div className={"ship-item ship-item-destroyer"} name={props.name} onClick={props.onClickStatusBoard}></div>
-                <div className={"ship-item ship-item-destroyer"} name={props.name} onClick={props.onClickStatusBoard}></div>
+                <div className={"ship-item ship-item-destroyer"} id={props.name+"_0"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
+                <div className={"ship-item ship-item-destroyer"} id={props.name+"_1"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
             </div>
         </div>
     );

@@ -3,22 +3,27 @@ import PropTypes from 'prop-types';
 import {findClassName} from "../helpers/classHelper";
 
 const Panel = ({panel, onClickBoard}) => {
-    console.log(panel)
     return (
         <div className={"gameBoard"}>
             {
                 panel.map(line => line.map(
                     item =>
-                        <div key={Math.random()} i={item.i} j={item.j} className={findClassName(item)}
-                             onClick={onClickBoard}></div>
+                        <div
+                            key={Math.random()}
+                            i={item.i}
+                            j={item.j}
+                            sourceId={item.sourceId}
+                            sourceName={item.sourceName}
+                            className={findClassName(item.sourceName)}
+                            onClick={onClickBoard}
+                            onContextMenu={onClickBoard}
+                        />
                 ))
             }
         </div>
     );
 };
 
-Panel.propTypes = {
-    
-};
+Panel.propTypes = {};
 
 export default Panel;

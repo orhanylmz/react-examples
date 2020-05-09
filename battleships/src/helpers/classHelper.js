@@ -4,20 +4,20 @@ export const KREUZER = "ship-item ship-item-kreuzer";
 export const DESTROYER = "ship-item ship-item-destroyer";
 export const BOAT = "ship-item ship-item-boat";
 
-export const findClassName = ({selected}) => {
-    if (!selected) {
+export const findClassName = (name) => {
+    if (!name) {
         return EMPTY;
     }
-    if (selected.indexOf("admiral") >= 0) {
+    if (name.indexOf("admiral") >= 0) {
         return ADMIRAL;
     }
-    if (selected.indexOf("kreuzer") >= 0) {
+    if (name.indexOf("kreuzer") >= 0) {
         return KREUZER;
     }
-    if (selected.indexOf("destroyer") >= 0) {
+    if (name.indexOf("destroyer") >= 0) {
         return DESTROYER;
     }
-    if (selected.indexOf("boat") >= 0) {
+    if (name.indexOf("boat") >= 0) {
         return BOAT;
     }
     return EMPTY;
