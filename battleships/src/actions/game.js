@@ -1,4 +1,4 @@
-import {initialBoard} from "../helpers/boardHelper";
+import {createPanel} from "../helpers/boardHelper";
 
 export const INITIAL_GAME = 'INITIAL_GAME';
 export const SET_CLICKABLE = 'SET_CLICKABLE';
@@ -12,8 +12,8 @@ export function initialGame() {
         dispatch({
             type: INITIAL_GAME,
             payload: {
-                mineBoard: initialBoard(),
-                otherBoard: initialBoard()
+                mineBoard: createPanel(),
+                otherBoard: createPanel()
             }
         })
     }

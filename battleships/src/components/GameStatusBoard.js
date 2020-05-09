@@ -12,21 +12,21 @@ const GameStatusBoard = props => {
 
     return (
         <div className={"gameStatusBoard"}>
-            <Admiral onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({admiral: true})}/>
+            <Admiral name={"admiral"} onClickStatusBoard={props.onClickStatusBoard}/>
             <div className={"kreuzer-boards"}>
-                <Kreuzer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({kreuzer: true})}/>
-                <Kreuzer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({kreuzer: true})}/>
+                <Kreuzer name={"kreuzer-1"} onClickStatusBoard={props.onClickStatusBoard}/>
+                <Kreuzer name={"kreuzer-2"} onClickStatusBoard={props.onClickStatusBoard}/>
             </div>
             <div className={"destroyer-boards"}>
-                <Destroyer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({destroyer: true})}/>
-                <Destroyer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({destroyer: true})}/>
-                <Destroyer onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({destroyer: true})}/>
+                <Destroyer name={"destroyer-1"} onClickStatusBoard={props.onClickStatusBoard}/>
+                <Destroyer name={"destroyer-2"} onClickStatusBoard={props.onClickStatusBoard}/>
+                <Destroyer name={"destroyer-3"} onClickStatusBoard={props.onClickStatusBoard}/>
             </div>
             <div className={"boat-boards"}>
-                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
-                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
-                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
-                <Boat onClickStatusBoard={props.onClickStatusBoard && props.onClickStatusBoard({boat: true})}/>
+                <Boat name={"boat-1"} onClickStatusBoard={props.onClickStatusBoard}/>
+                <Boat name={"boat-2"} onClickStatusBoard={props.onClickStatusBoard}/>
+                <Boat name={"boat-3"} onClickStatusBoard={props.onClickStatusBoard}/>
+                <Boat name={"boat-4"} onClickStatusBoard={props.onClickStatusBoard}/>
             </div>
         </div>
     );

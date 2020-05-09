@@ -1,33 +1,32 @@
-export const createAdmiral = (i1, j1, i2, j2, i3, j3, i4, j4) => {
+export const createAdmiral = ({part0, part1, part2, part3}) => {
     return {
-        parts: [createShipPart(i1, j1), createShipPart(i2, j2), createShipPart(i3, j3), createShipPart(i4, j4)],
+        parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j), createShipPart(part2.i, part2.j), createShipPart(part3.i, part3.j)],
         shot: false
     }
 }
 
-export const createKreuzer = (i1, j1, i2, j2, i3, j3) => {
+export const createKreuzer = ({part0, part1, part2}) => {
     return {
-        parts: [createShipPart(i1, j1), createShipPart(i2, j2), createShipPart(i3, j3)],
+        parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j), createShipPart(part2.i, part2.j)],
         shot: false
     }
 }
 
-export const createDestroyer = (i1, j1, i2, j2) => {
+export const createDestroyer = ({part0, part1}) => {
     return {
-        parts: [createShipPart(i1, j1), createShipPart(i2, j2)],
+        parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j)],
         shot: false
     }
 }
 
-export const createBoat = (i1, j1) => {
+export const createBoat = ({part0}) => {
     return {
-        parts: [createShipPart(i1, j1)],
+        parts: [createShipPart(part0.i, part0.j)],
         shot: false
     }
 }
 
-export const shot = ({shots, shotOrder}, ship) => {
-    const {parts, shot} = ship;
+export const shot = ({shots, shotOrder}, {parts}) => {
     var currentShotCount = 0;
     var totalShotCount = 0;
     const newParts = parts.map(part => {

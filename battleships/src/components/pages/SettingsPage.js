@@ -1,63 +1,50 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import {initialSettingsBoard, setShips, move} from "../../actions/settings";
+import {setShips} from "../../actions/settings";
 
 import SettingsBoard from '../SettingsBoard';
 import GameStatusBoard from "../GameStatusBoard";
 
-import {findClassName, EMPTY} from "../../helpers/classHelper";
+import {EMPTY} from "../../helpers/classHelper";
+import {createBoard} from "../../helpers/boardHelper";
 
 class SettingsPage extends Component {
     state = {
-        admiral: false,
-        kreuzer: false,
-        destroyer: false,
-        boat: false,
-        loaded: false
+        clickable: false,
+        board: [],
+        admiral: {},
+        kreuzers: [],
+        destroyers: [],
+        boats: [],
+        selected: null
     };
 
     componentDidMount() {
-        this.props.initialSettingsBoard();
+        //this.props.initialSettingsBoard();
     }
 
-    onClickStatusBoard = ({admiral, kreuzer, destroyer, boat}) => e => {
-        if (this.state.loaded){
-            return;
-        }
+    componentWillReceiveProps(nextProps, nextContext) {
         this.setState({
-            admiral,
-            kreuzer,
-            destroyer,
-            boat,
-            loaded: true
-        });
-        e.target.className = EMPTY;
-    }
-
-    onClickSettingsBoard =  e => {
-        if (! this.state.loaded) {
-            return;
-        }
-        e.target.className = findClassName(this.state);
-        this.setState({
-            loaded: false
+            ...nextProps.settings
         })
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return this.props !== nextProps;
+        return this.state !== nextState;
     }
 
     render() {
         return (
             <div>
                 <SettingsBoard
-                    settings={this.props.settings}
+                    panel={this.props.settings.panel}
+                    admiral={this.props.settings.admiral}
+                    kreuzers={this.props.settings.kreuzers}
+                    destroyers={this.props.settings.destroyers}
+                    boats={this.props.settings.boats}
                     setShips={this.props.setShips}
-                    onClickSettingsBoard={this.onClickSettingsBoard}
                 />
-                <GameStatusBoard onClickStatusBoard={this.onClickStatusBoard}/>
             </div>
         );
     }
@@ -72,9 +59,7 @@ const mapStateToProps = ({settings}) => {
 }
 
 const mapDispatchToProps = {
-    initialSettingsBoard,
-    setShips,
-    move,
+    setShips
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);

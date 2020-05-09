@@ -7,11 +7,11 @@ const Admiral = props => {
     return (
         <div className={"admiral-board"}>
             <div></div>
-            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
+            <div className={"ship-item ship-item-admiral"} name={props.name} onClick={props.onClickStatusBoard}></div>
             <div></div>
-            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
-            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
-            <div className={"ship-item ship-item-admiral"} onClick={props.onClickStatusBoard}></div>
+            <div className={"ship-item ship-item-admiral"} name={props.name} onClick={props.onClickStatusBoard}></div>
+            <div className={"ship-item ship-item-admiral"} name={props.name} onClick={props.onClickStatusBoard}></div>
+            <div className={"ship-item ship-item-admiral"} name={props.name} onClick={props.onClickStatusBoard}></div>
         </div>
     );
 };
