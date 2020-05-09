@@ -146,7 +146,7 @@ class SettingsBoard extends Component {
                     {this.state.error && <InlineError message={this.state.error}/>}
                     <Panel
                         panel={this.state.panel}
-                        onClickSettingsBoard={this.onClickSettingsBoard}
+                        onClickBoard={this.onClickSettingsBoard}
                     />
                     <button onClick={this.createGame}>create game</button>
                     <GameStatusBoard onClickStatusBoard={this.onClickStatusBoard}/>
