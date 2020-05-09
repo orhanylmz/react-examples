@@ -124,7 +124,10 @@ class SettingsBoard extends Component {
 
     createGame = () => {
         const {panel} = this.state;
-        const shipParts = panel.flat().filter(item => item.selectedName);
+        const shipParts = panel.flat().filter(item => item.sourceName);
+
+        console.log(shipParts.length);
+
         if (shipParts.length < 20) {
             this.setState({
                 error: "Please set another ships"
@@ -132,67 +135,41 @@ class SettingsBoard extends Component {
             return;
         }
 
-        const admiral = shipParts.filter(part => part.selectedName === "admiral");
-        const kreuzer1 = shipParts.filter(part => part.selectedName === "kreuzer-1");
-        const kreuzer2 = shipParts.filter(part => part.selectedName === "kreuzer-2");
-        const destroyer1 = shipParts.filter(part => part.selectedName === "destroyer-1");
-        const destroyer2 = shipParts.filter(part => part.selectedName === "destroyer-2");
-        const destroyer3 = shipParts.filter(part => part.selectedName === "destroyer-3");
-        const boat1 = shipParts.filter(part => part.selectedName === "boat-1");
-        const boat2 = shipParts.filter(part => part.selectedName === "boat-2");
-        const boat3 = shipParts.filter(part => part.selectedName === "boat-3");
-        const boat4 = shipParts.filter(part => part.selectedName === "boat-4");
+        const admiral = shipParts.filter(part => part.sourceName === "admiral");
+        const kreuzer1 = shipParts.filter(part => part.sourceName === "kreuzer-1");
+        const kreuzer2 = shipParts.filter(part => part.sourceName === "kreuzer-2");
+        const destroyer1 = shipParts.filter(part => part.sourceName === "destroyer-1");
+        const destroyer2 = shipParts.filter(part => part.sourceName === "destroyer-2");
+        const destroyer3 = shipParts.filter(part => part.sourceName === "destroyer-3");
+        const boat1 = shipParts.filter(part => part.sourceName === "boat-1")
+        const boat2 = shipParts.filter(part => part.sourceName === "boat-2");
+        const boat3 = shipParts.filter(part => part.sourceName === "boat-3");
+        const boat4 = shipParts.filter(part => part.sourceName === "boat-4");
 
         this.props.setShips(
             {
-                admiral: createAdmiral({
-                    part0: admiral[0],
-                    part1: admiral[1],
-                    part2: admiral[2],
-                    part3: admiral[3]
-                }),
+                admiral: createAdmiral(admiral[0], admiral[1], admiral[2], admiral[3]),
                 kreuzers: [
-                    createKreuzer({
-                        part0: kreuzer1[0],
-                        part1: kreuzer1[1],
-                        part2: kreuzer1[2]
-                    }),
-                    createKreuzer({
-                        part0: kreuzer2[0],
-                        part1: kreuzer2[1],
-                        part2: kreuzer2[2]
-                    })
+                    createKreuzer(kreuzer1[0], kreuzer1[1], kreuzer1[2]),
+                    createKreuzer(kreuzer2[0], kreuzer2[1], kreuzer2[2])
                 ],
                 destroyers: [
-                    createDestroyer({
-                        part0: destroyer1[0],
-                        part1: destroyer1[1]
-                    }),
-                    createDestroyer({
-                        part0: destroyer2[0],
-                        part1: destroyer2[1]
-                    }),
-                    createDestroyer({
-                        part0: destroyer3[0],
-                        part1: destroyer3[1]
-                    })
+                    createDestroyer(destroyer1[0], destroyer1[1]),
+                    createDestroyer(destroyer2[0], destroyer2[1]),
+                    createDestroyer(destroyer3[0], destroyer3[1])
                 ],
                 boats: [
-                    createBoat({
-                        part0: boat1[0]
-                    }),
-                    createBoat({
-                        part0: boat2[0]
-                    }),
-                    createBoat({
-                        part0: boat3[0]
-                    }),
-                    createBoat({
-                        part0: boat4[0]
-                    })
+                    createBoat(boat1[0]),
+                    createBoat(boat2[0]),
+                    createBoat(boat3[0]),
+                    createBoat(boat4[0])
                 ]
             }
         );
+
+        this.setState({
+            error: null
+        });
     }
 
     render() {

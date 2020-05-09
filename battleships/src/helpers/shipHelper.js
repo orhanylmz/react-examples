@@ -1,25 +1,25 @@
-export const createAdmiral = ({part0, part1, part2, part3}) => {
+export const createAdmiral = (part0, part1, part2, part3) => {
     return {
         parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j), createShipPart(part2.i, part2.j), createShipPart(part3.i, part3.j)],
         shot: false
     }
 }
 
-export const createKreuzer = ({part0, part1, part2}) => {
+export const createKreuzer = (part0, part1, part2) => {
     return {
         parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j), createShipPart(part2.i, part2.j)],
         shot: false
     }
 }
 
-export const createDestroyer = ({part0, part1}) => {
+export const createDestroyer = (part0, part1) => {
     return {
         parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j)],
         shot: false
     }
 }
 
-export const createBoat = ({part0}) => {
+export const createBoat = (part0) => {
     return {
         parts: [createShipPart(part0.i, part0.j)],
         shot: false
