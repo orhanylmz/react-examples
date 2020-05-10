@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import FooterButton from "./FooterButton";
 import Panel from "./Panel";
 import Ships from "./Ships";
 
