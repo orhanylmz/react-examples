@@ -1,32 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {findClassName} from "../helpers/classHelper";
 
-const Panel = ({panel, onClickBoard}) => {
+import Box from "./Box";
+
+import '../css/grid.css'
+import {createPanel} from "../helpers/panelHelper";
+
+const Panel = props => {
+    let panel = props.panel;
+    if (!panel) {
+        panel = createPanel();
+    }
+
     return (
-        <div className={"gameBoard"}>
+        <div className={"grid panel"}>
             {
-                panel.map(line => line.map(
-                    item =>
-                        <div
-                            key={Math.random()}
-                            i={item.i}
-                            j={item.j}
-                            sourceId={item.sourceId}
-                            sourceName={item.sourceName}
-                            className={findClassName(item.sourceName)}
-                            onClick={onClickBoard}
-                            onContextMenu={onClickBoard}
+                panel.map(line =>
+                    line.map(content =>
+                        <Box
+                            key={content.id}
+                            onClick={props.onClick}
+                            onRightClick={props.onRightClick}
+                            content={content}
                         />
-                ))
+                    )
+                )
             }
         </div>
     );
 };
 
 Panel.propTypes = {
-    panel: PropTypes.array.isRequired,
-    onClickBoard: PropTypes.func.isRequired
+    panel: PropTypes.array
 };
 
 export default Panel;

@@ -1,63 +1,48 @@
-export const createAdmiral = (part0, part1, part2, part3) => {
+export const generateAdmiral = () => {
+    let type = "admiral";
+    let name = type + "_" + 0;
     return {
-        parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j), createShipPart(part2.i, part2.j), createShipPart(part3.i, part3.j)],
-        shot: false
+        parts: [generateShipPart(type, name, 0), generateShipPart(type, name, 1), generateShipPart(type, name, 2), generateShipPart(type, name, 3)],
+        shot: false,
     }
 }
 
-export const createKreuzer = (part0, part1, part2) => {
+export const generateKreuzer = (i) => {
+    let type = "kreuzer";
+    let name = type + "_" + i;
     return {
-        parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j), createShipPart(part2.i, part2.j)],
-        shot: false
+        parts: [generateShipPart(type, name, 0), generateShipPart(type, name, 1), generateShipPart(type, name, 2)],
+        shot: false,
     }
 }
 
-export const createDestroyer = (part0, part1) => {
+export const generateDestroyer = (i) => {
+    let type = "destroyer";
+    let name = type + "_" + i;
     return {
-        parts: [createShipPart(part0.i, part0.j), createShipPart(part1.i, part1.j)],
-        shot: false
+        parts: [generateShipPart(type, name, 0), generateShipPart(type, name, 1)],
+        shot: false,
     }
 }
 
-export const createBoat = (part0) => {
+export const generateBoat = (i) => {
+    let type = "boat";
+    let name = type + "_" + i;
     return {
-        parts: [createShipPart(part0.i, part0.j)],
-        shot: false
+        parts: [generateShipPart(type, name, 0)],
+        shot: false,
     }
 }
 
-export const shot = ({shots, shotOrder}, {parts}) => {
-    var currentShotCount = 0;
-    var totalShotCount = 0;
-    const newParts = parts.map(part => {
-        if (shots.find(shot => shot.i === part.i && shot.j === part.j)) {
-            currentShotCount++;
-            part = createShotPart(part, shotOrder);
-        }
-        if (part.shotOrder) {
-            totalShotCount++;
-        }
-        return part;
-    });
-
+const generateShipPart = (type, name, part) => {
     return {
-        currentShotCount: currentShotCount,
-        parts: newParts,
-        shot: totalShotCount === parts.length
-    }
-}
-
-const createShotPart = (part, shotOrder) => {
-    return {
-        ...part,
-        shotOrder: shotOrder
-    }
-}
-
-const createShipPart = (i, j) => {
-    return {
-        i: i,
-        j: j,
-        shutOrder: null
+        i: null,
+        j: null,
+        type: type,
+        currentType: type,
+        name: name,
+        id: name + "_" + part,
+        part: part,
+        shot: null
     }
 }

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Box from "../Box";
 
 const Destroyer = props => {
     return (
         <div>
-            <div className={"destroyer-board"}>
-                <div className={"ship-item ship-item-destroyer"} id={props.name+"_0"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
-                <div className={"ship-item ship-item-destroyer"} id={props.name+"_1"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
+            <div className={"ship-grid grid-2"}>
+                <Box content={props.content.parts[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box content={props.content.parts[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             </div>
         </div>
     );

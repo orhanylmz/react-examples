@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Box from "../Box";
 
 const Boat = props => {
     return (
         <div>
-            <div className={"boat-board"}>
-                <div className={"ship-item ship-item-boat"} id={props.name+"_0"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
+            <div className={"ship-grid"}>
+                <Box content={props.content.parts[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             </div>
         </div>
     );

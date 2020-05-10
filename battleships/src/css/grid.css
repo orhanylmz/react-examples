@@ -1,0 +1,42 @@
+.grid {
+    display: grid;
+    background-color: white;
+    margin: auto;
+    padding-top: 1vh;
+}
+
+.ship-grid {
+    display: grid;
+    background-color: white;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+.grid-1-4 {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto;
+}
+
+.grid-1-2 {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+}
+
+.grid-2 {
+    grid-template-columns: auto auto;
+}
+
+.grid-3 {
+    grid-template-columns: auto auto auto;
+}
+
+.grid-4 {
+    grid-template-columns: auto auto auto auto;
+}
+
+.panel {
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    width: 26vw;
+    height: 26vw;
+}

@@ -1,0 +1,36 @@
+.box {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 1.5vw;
+    font-family: "Comic Sans MS";
+    width: 2.5vw;
+    height: 2.5vw;
+}
+
+.bordered {
+    border: 0.05vw solid black;
+}
+
+.admiral {
+    background-color: #333333;
+}
+
+.kreuzer {
+    background-color: #6A6A6A;
+}
+
+.destroyer {
+    background-color: #A0A0A0;
+}
+
+.boat {
+    background-color: #D7D7D7;
+}
+
+.miss {
+    background-color: #FF9999;
+}
+
+.shot {
+    background-color: #FF0000;
+}

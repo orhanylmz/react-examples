@@ -1,48 +1,49 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-
-import GameBoard from "../GameBoard";
-
-import {initialGame, setClickable, nextMoveOrder ,addMoveList, removeMoveList, setOtherBoard} from "../../actions/game";
+import GamePageInitial from "../GamePageInitial";
+import GamePageLoading from "../GamePageLoading";
+import GamePageGame from "../GamePageGame";
+import {generateAdmiral, generateBoat, generateDestroyer, generateKreuzer} from "../../helpers/shipHelper";
 
 class GamePage extends Component {
-    state = {};
-
-    componentDidMount() {
-        this.props.initialGame();
+    state = {
+        step: 1,
+        panel: [],
     }
 
+    nextStep = ({panel}) => {
+        this.setState({
+            step: this.state.step + 1,
+            panel: panel ? panel : this.state.panel
+        })
+    };
+
     render() {
-        return (
-            <GameBoard
-                game={this.props.game}
-                initialGame={this.props.initialGame}
-                setClickable={this.props.setClickable}
-                nextMoveOrder={this.props.nextMoveOrder}
-                addMoveList={this.props.addMoveList}
-                removeMoveList={this.props.removeMoveList}
-                setOtherBoard={this.props.setOtherBoard}
-            />
-        );
+        const {step, panel} = this.state;
+
+        switch (step) {
+            case 1:
+                return (
+                    <div>
+                        <GamePageInitial nextStep={this.nextStep}/>
+                    </div>
+                );
+            case 2:
+                return (
+                    <div>
+                        <GamePageLoading nextStep={this.nextStep}/>
+                    </div>
+                );
+            case 3:
+                return (
+                    <div>
+                        <GamePageGame panel={panel}/>
+                    </div>
+                );
+        }
     }
 }
 
 GamePage.propTypes = {};
 
-const mapStateToProps = ({game}) => {
-    return {
-        game
-    }
-}
-
-const mapDispatchToProps = {
-    initialGame,
-    setClickable,
-    nextMoveOrder,
-    addMoveList,
-    removeMoveList,
-    setOtherBoard
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(GamePage);
+export default GamePage;

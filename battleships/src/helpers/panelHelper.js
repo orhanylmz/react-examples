@@ -1,5 +1,3 @@
-import {EMPTY} from "./classHelper";
-
 export const createPanel = () => {
     const panel = [];
     for (var j = 0; j < 10; j++) {
@@ -16,7 +14,7 @@ const value = (i, j) => {
     return {
         i: i,
         j: j,
-        moveOrder: null
+        id: "panel_" + i + "_" + j,
+        content: null
     };
 }
-

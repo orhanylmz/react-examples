@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../css/gameStatusBoard.css'
+import Box from "../Box";
 
 const Kreuzer = props => {
     return (
-        <div className={"kreuzer-board"}>
-            <div className={"ship-item ship-item-kreuzer"} id={props.name+"_0"} name={props.name} onClick={props.onClickStatusBoard}  onContextMenu={props.onClickStatusBoard}/>
-            <div className={"ship-item ship-item-kreuzer"} id={props.name+"_1"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
-            <div className={"ship-item ship-item-kreuzer"} id={props.name+"_2"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
+        <div className={"ship-grid grid-3"}>
+            <Box content={props.content.parts[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+            <Box content={props.content.parts[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+            <Box content={props.content.parts[2]} onClick={props.onClick} onRightClick={props.onRightClick}/>
         </div>
     );
 };

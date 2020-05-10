@@ -1,23 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../css/gameStatusBoard.css'
+import '../../css/box.css';
+import '../../css/grid.css';
+import Box from "../Box";
 
 const Admiral = props => {
     return (
-        <div className={"admiral-board"}>
-            <div/>
-            <div className={"ship-item ship-item-admiral"} id={props.name+"_0"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
-            <div/>
-            <div className={"ship-item ship-item-admiral"} id={props.name+"_1"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
-            <div className={"ship-item ship-item-admiral"} id={props.name+"_2"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
-            <div className={"ship-item ship-item-admiral"} id={props.name+"_3"} name={props.name} onClick={props.onClickStatusBoard} onContextMenu={props.onClickStatusBoard}/>
+        <div className={"grid grid-1-2"}>
+            <div className={"grid"}>
+                <Box content={props.content.parts[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+            </div>
+            <div className={"ship-grid grid-3"}>
+                <Box content={props.content.parts[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box content={props.content.parts[2]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box content={props.content.parts[3]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+            </div>
         </div>
     );
 };
 
-Admiral.propTypes = {
-
-};
+Admiral.propTypes = {};
 
 export default Admiral;
