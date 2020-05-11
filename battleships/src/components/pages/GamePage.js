@@ -3,23 +3,24 @@ import PropTypes from 'prop-types';
 import GamePageInitial from "../GamePageInitial";
 import GamePageLoading from "../GamePageLoading";
 import GamePageGame from "../GamePageGame";
-import {generateAdmiral, generateBoat, generateDestroyer, generateKreuzer} from "../../helpers/shipHelper";
 
 class GamePage extends Component {
     state = {
         step: 1,
-        panel: [],
+        ships: null,
+        name: "Orhan",
+        surname: "Yılmaz"
     }
 
-    nextStep = ({panel}) => {
+    nextStep = (ships) => {
         this.setState({
             step: this.state.step + 1,
-            panel: panel ? panel : this.state.panel
+            ships: ships
         })
     };
 
     render() {
-        const {step, panel} = this.state;
+        const {step, ships} = this.state;
 
         switch (step) {
             case 1:
@@ -37,7 +38,7 @@ class GamePage extends Component {
             case 3:
                 return (
                     <div>
-                        <GamePageGame panel={panel}/>
+                        <GamePageGame ships={ships}/>
                     </div>
                 );
         }

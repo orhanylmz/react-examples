@@ -6,11 +6,14 @@ import Ships from "./Ships";
 import {createPanel} from "../helpers/panelHelper";
 import {generateAdmiral, generateKreuzer, generateDestroyer, generateBoat} from "../helpers/shipHelper";
 
+import {mapShipsToPanel} from "../helpers/playerHelper";
+
 class GamePageGame extends Component {
     state = {
         shotPanel: createPanel(),
         shotList: [],
-        totalShotOrder: 0
+        totalShotOrder: 0,
+        otherPanel: null
     }
 
     onClickPanel = content => e => {
@@ -90,7 +93,8 @@ class GamePageGame extends Component {
 
     render() {
         const {shotList, shotPanel} = this.state;
-        const {panel} = this.props;
+        const {ships} = this.props;
+        const otherPanel = mapShipsToPanel(ships)
         const loadedShot = shotList.length === 3;
 
         return (
@@ -100,7 +104,7 @@ class GamePageGame extends Component {
                     <button className={"action-button " + (!loadedShot ? "disabled" : "")} disabled={!loadedShot}
                             onClick={this.shot}>Shot
                     </button>
-                    <Panel panel={panel}/>
+                    <Panel panel={otherPanel}/>
                 </div>
                 <div className={"grid"}>
                     <Ships

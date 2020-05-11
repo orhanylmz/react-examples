@@ -4,13 +4,11 @@ import '../css/App.css';
 
 import GamePage from "./pages/GamePage";
 
-const App = props => {
-    return (
-        <div>
-            <GamePage/>
-        </div>
-    );
-};
+const App = props =>
+    <div>
+        <GamePage/>
+    </div>
+;
 
 App.propTypes = {};
 

@@ -13,13 +13,18 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import logger from 'redux-logger';
 
+import Firebase, {FirebaseContext} from './firebase';
+import GamePage from "./components/pages/GamePage";
+
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, logger)))
 
 ReactDOM.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App/>
-        </Provider>
+        <FirebaseContext.Provider value={new Firebase()}>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </FirebaseContext.Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );

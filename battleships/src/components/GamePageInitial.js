@@ -7,6 +7,10 @@ import FooterButton from "./FooterButton";
 import {createPanel} from "../helpers/panelHelper";
 import {generateAdmiral, generateKreuzer, generateDestroyer, generateBoat} from "../helpers/shipHelper";
 
+import {withFirebase} from "../firebase";
+
+import {generatePlayer, mapPanelToShips} from "../helpers/playerHelper";
+
 class GamePageInitial extends Component {
     state = {
         panel: createPanel(),
@@ -20,7 +24,7 @@ class GamePageInitial extends Component {
         boat_1: generateBoat(1),
         boat_2: generateBoat(2),
         boat_3: generateBoat(3),
-        done: false,
+        done: true,
         loadedContent: null
     }
 
@@ -122,7 +126,7 @@ class GamePageInitial extends Component {
         this.setState({
             panel: newPanel,
             loadedContent: null,
-            done: done
+            done: true
         })
     }
 
@@ -161,7 +165,48 @@ class GamePageInitial extends Component {
     }
 
     onClickNextStep = () => {
-        this.props.nextStep(this.state);
+       /*
+        this.props.firebase.firestore.collection("admiral").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                console.log(`${doc.id} => ${JSON.stringify(doc.data().parts)}`);
+            });
+        });
+
+        */
+
+      /*  this.props.firebase.firestore.collection("part").doc("wmSB2ERIu74Wjk03YGGG").set({
+            i: "7",
+          // j: "1",
+            shot: 1
+        }, { merge: true })
+            .then(function() {
+                console.log("Document successfully written!");
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+
+       */
+
+        const ships = mapPanelToShips(this.state.panel);
+
+      /*  this.props.firebase.firestore.collection("player").add(player)
+            .then(function() {
+                console.log("Document successfully written!");
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+       */
+
+     //   const {panel} = this.state;
+       // this.props.firebase.createGameRef(panel).then(function(docRef) {
+      //      console.log("Document written with ID: ", docRef.id);
+       // })
+        //    .catch(function(error) {
+        //        console.error("Error adding document: ", error);
+        //    });
+        this.props.nextStep(ships);
     }
 
     render() {
@@ -202,4 +247,4 @@ class GamePageInitial extends Component {
 
 GamePageInitial.propTypes = {};
 
-export default GamePageInitial;
+export default withFirebase(GamePageInitial);
