@@ -19,6 +19,12 @@ class GamePage extends Component {
         })
     };
 
+    start = () => {
+        this.setState({
+            step: this.state.step + 1,
+        })
+    };
+
     render() {
         const {step, ships} = this.state;
 
@@ -32,7 +38,7 @@ class GamePage extends Component {
             case 2:
                 return (
                     <div>
-                        <GamePageLoading nextStep={this.nextStep}/>
+                        <GamePageLoading nextStep={this.start}/>
                     </div>
                 );
             case 3:

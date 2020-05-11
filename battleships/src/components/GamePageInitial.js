@@ -24,7 +24,7 @@ class GamePageInitial extends Component {
         boat_1: generateBoat(1),
         boat_2: generateBoat(2),
         boat_3: generateBoat(3),
-        done: true,
+        done: false,
         loadedContent: null
     }
 
@@ -107,26 +107,19 @@ class GamePageInitial extends Component {
             return;
         }
 
-        const newPanel = panel.map(line => line.map(
-            box => {
-                if (content.i === box.i && content.j === box.j) {
-                    box = {
-                        ...box,
-                        content: {
-                            ...loadedContent
-                        }
-                    }
-                }
-                return box;
+        panel[content.j][content.i] = {
+            ...panel[content.j][content.i],
+            content: {
+                ...loadedContent
             }
-        ));
+        }
 
-        const done = newPanel.flat().filter(box => box.content).length === 20;
+        const done = panel.flat().filter(box => box.content).length === 20;
 
         this.setState({
-            panel: newPanel,
+            panel: panel,
             loadedContent: null,
-            done: true
+            done: done
         })
     }
 
