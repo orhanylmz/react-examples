@@ -4,7 +4,7 @@ import Panel from "./Panel";
 import Ships from "./Ships";
 
 import {createPanel} from "../helpers/panelHelper";
-import {generateAdmiral, generateKreuzer, generateDestroyer, generateBoat} from "../helpers/shipHelper";
+import {tempShips} from "../helpers/shipHelper";
 
 import {mapShipsToPanel} from "../helpers/playerHelper";
 
@@ -13,7 +13,8 @@ class GamePageGame extends Component {
         shotPanel: createPanel(),
         shotList: [],
         totalShotOrder: 0,
-        otherPanel: null
+        otherPanel: null,
+        ships: tempShips()
     }
 
     onClickPanel = content => e => {
@@ -108,16 +109,7 @@ class GamePageGame extends Component {
                 </div>
                 <div className={"grid"}>
                     <Ships
-                        admiral_0={generateAdmiral()}
-                        kreuzer_0={generateKreuzer(0)}
-                        kreuzer_1={generateKreuzer(1)}
-                        destroyer_0={generateDestroyer(0)}
-                        destroyer_1={generateDestroyer(1)}
-                        destroyer_2={generateDestroyer(2)}
-                        boat_0={generateBoat(0)}
-                        boat_1={generateBoat(1)}
-                        boat_2={generateBoat(2)}
-                        boat_3={generateBoat(3)}
+                        ships={this.state.ships}
                     />
                 </div>
             </div>

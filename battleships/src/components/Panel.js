@@ -16,12 +16,12 @@ const Panel = props => {
         <div className={"grid panel"}>
             {
                 panel.map(line =>
-                    line.map(content =>
+                    line.map(box =>
                         <Box
-                            key={content.id}
+                            key={box.id}
                             onClick={props.onClick}
                             onRightClick={props.onRightClick}
-                            content={content}
+                            box={box}
                         />
                     )
                 )

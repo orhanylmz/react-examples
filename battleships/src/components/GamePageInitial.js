@@ -5,7 +5,7 @@ import Ships from "./Ships";
 import FooterButton from "./FooterButton";
 
 import {createPanel} from "../helpers/panelHelper";
-import {generateAdmiral, generateKreuzer, generateDestroyer, generateBoat} from "../helpers/shipHelper";
+import {LOADED, tempShips} from "../helpers/shipHelper";
 
 import {withFirebase} from "../firebase";
 
@@ -14,103 +14,87 @@ import {generatePlayer, mapPanelToShips} from "../helpers/playerHelper";
 class GamePageInitial extends Component {
     state = {
         panel: createPanel(),
-        admiral_0: generateAdmiral(),
-        kreuzer_0: generateKreuzer(0),
-        kreuzer_1: generateKreuzer(1),
-        destroyer_0: generateDestroyer(0),
-        destroyer_1: generateDestroyer(1),
-        destroyer_2: generateDestroyer(2),
-        boat_0: generateBoat(0),
-        boat_1: generateBoat(1),
-        boat_2: generateBoat(2),
-        boat_3: generateBoat(3),
+        tempShips: tempShips(),
         done: false,
-        loadedContent: null
+        selectedContent: null
     }
 
-    onClickShip = content => e => {
+    onClickShip = box => e => {
         e.preventDefault();
 
-        if (!content.currentType) {
+        if (box.content.state.indexOf(LOADED) >= 0) {
             return;
         }
 
-        const {loadedContent} = this.state;
+        const {selectedContent, tempShips} = this.state;
 
-        if (loadedContent && loadedContent.id === content.id) {
+        if (selectedContent && selectedContent.type === box.content.type && selectedContent.index === box.content.index && selectedContent.part === box.content.part) {
+            //duplicate click
             return;
         }
 
-        let reverseShip = null;
-        if (loadedContent && loadedContent.id !== content.id) {
-            reverseShip = this.state[loadedContent.name];
-            reverseShip.parts[loadedContent.part] = {
-                ...reverseShip.parts[loadedContent.part],
-                currentType: reverseShip.parts[loadedContent.part].type
+        if (selectedContent && (selectedContent.type !== box.content.type || selectedContent.index !== box.content.index || selectedContent.part !== box.content.part)) {
+            let reverseShip = tempShips[selectedContent.type];
+            reverseShip[selectedContent.index].parts[selectedContent.part].content = {
+                ...reverseShip[selectedContent.index].parts[selectedContent.part].content,
+                state: reverseShip[selectedContent.index].parts[selectedContent.part].content.type
             }
         }
 
-        const ship = this.state[content.name];
-        ship.parts[content.part] = {
-            ...ship.parts[content.part],
-            currentType: null
-        }
-
-        if (reverseShip) {
-            this.setState({
-                [content.name]: ship,
-                [loadedContent.name]: reverseShip,
-                loadedContent: {
-                    ...content
-                }
-            });
-            return;
+        const ship = tempShips[box.content.type];
+        ship[box.content.index].parts[box.content.part].content = {
+            ...ship[box.content.index].parts[box.content.part].content,
+            state: LOADED
         }
 
         this.setState({
-            [content.name]: ship,
-            loadedContent: {
-                ...content
+            tempShips: tempShips,
+            selectedContent: {
+                ...box.content,
+                state: box.content.type
             }
-        })
+        });
     }
 
-    onRightClickShip = content => e => {
+    onRightClickShip = box => e => {
         e.preventDefault();
 
-        const {loadedContent} = this.state;
-        if (!loadedContent || loadedContent.id !== content.id) {
-            return;
+        const {selectedContent, tempShips} = this.state;
+
+        if (!selectedContent || selectedContent.type !== box.content.type || selectedContent.index !== box.content.index || selectedContent.part !== box.content.part) {
+            return
         }
 
-        const ship = this.state[content.name];
-        ship.parts[content.part] = {
-            ...ship.parts[content.part],
-            currentType: ship.parts[content.part].type
+        const ship = tempShips[box.content.type];
+        ship[box.content.index].parts[box.content.part].content = {
+            ...ship[box.content.index].parts[box.content.part].content,
+            state: ship[box.content.index].parts[box.content.part].content.type
         }
 
         this.setState({
-            [content.name]: ship,
-            loadedContent: null
-        })
+            tempShips: tempShips,
+            selectedContent: null
+        });
     }
 
-    onClickPanel = content => e => {
+    onClickPanel = box => e => {
         e.preventDefault();
 
-        const {loadedContent, panel} = this.state;
-        if (!loadedContent) {
+        const {selectedContent, panel} = this.state;
+        if (!selectedContent) {
             return;
         }
 
-        if (panel[content.j][content.i].content != null) {
+        if (panel[box.j][box.i].content != null) {
             return;
         }
 
-        panel[content.j][content.i] = {
-            ...panel[content.j][content.i],
+        panel[box.j][box.i] = {
+            ...panel[box.j][box.i],
             content: {
-                ...loadedContent
+                ...selectedContent,
+                i: box.i,
+                j: box.j
             }
         }
 
@@ -118,84 +102,77 @@ class GamePageInitial extends Component {
 
         this.setState({
             panel: panel,
-            loadedContent: null,
+            selectedContent: null,
             done: done
         })
     }
 
-    onRightClickPanel = content => e => {
+    onRightClickPanel = box => e => {
         e.preventDefault();
 
-        if (!content.content) {
+        if (!box.content) {
             return;
         }
 
-        const {panel} = this.state;
+        const {tempShips, panel} = this.state;
 
-        let reverseShip = this.state[content.content.name];
-        reverseShip.parts[content.content.part] = {
-            ...reverseShip.parts[content.content.part],
-            currentType: reverseShip.parts[content.content.part].type
+        const ship = tempShips[box.content.type];
+        ship[box.content.index].parts[box.content.part].content = {
+            ...ship[box.content.index].parts[box.content.part].content,
+            state: ship[box.content.index].parts[box.content.part].content.type
         }
 
-        const newPanel = panel.map(line => line.map(
-            box => {
-                if (content.i === box.i && content.j === box.j) {
-                    box = {
-                        ...box,
-                        content: null
-                    }
-                }
-                return box;
-            }
-        ));
+        panel[box.j][box.i] = {
+            ...panel[box.j][box.i],
+            content: null
+        }
 
         this.setState({
-            panel: newPanel,
-            [content.content.name]: reverseShip,
-            done: false
+            panel,
+            tempShips,
+            selectedContent: null
         });
     }
 
     onClickNextStep = () => {
-       /*
-        this.props.firebase.firestore.collection("admiral").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${JSON.stringify(doc.data().parts)}`);
-            });
-        });
+        /*
+         this.props.firebase.firestore.collection("admiral").get().then((querySnapshot) => {
+             querySnapshot.forEach((doc) => {
+                 console.log(`${doc.id} => ${JSON.stringify(doc.data().parts)}`);
+             });
+         });
 
-        */
+         */
 
-      /*  this.props.firebase.firestore.collection("part").doc("wmSB2ERIu74Wjk03YGGG").set({
-            i: "7",
-          // j: "1",
-            shot: 1
-        }, { merge: true })
-            .then(function() {
-                console.log("Document successfully written!");
-            })
-            .catch(function(error) {
-                console.error("Error writing document: ", error);
-            });
+        /*  this.props.firebase.firestore.collection("part").doc("wmSB2ERIu74Wjk03YGGG").set({
+              i: "7",
+            // j: "1",
+              shot: 1
+          }, { merge: true })
+              .then(function() {
+                  console.log("Document successfully written!");
+              })
+              .catch(function(error) {
+                  console.error("Error writing document: ", error);
+              });
 
-       */
+         */
 
         const ships = mapPanelToShips(this.state.panel);
 
-      /*  this.props.firebase.firestore.collection("player").add(player)
-            .then(function() {
-                console.log("Document successfully written!");
-            })
-            .catch(function(error) {
-                console.error("Error writing document: ", error);
-            });
-       */
+        /*  this.props.firebase.firestore.collection("player").add(player)
+              .then(function() {
+                  console.log("Document successfully written!");
+              })
+              .catch(function(error) {
+                  console.error("Error writing document: ", error);
+              });
+         */
 
-     //   const {panel} = this.state;
-       // this.props.firebase.createGameRef(panel).then(function(docRef) {
-      //      console.log("Document written with ID: ", docRef.id);
-       // })
+        //   const {panel} = this.state;
+        // this.props.firebase.createGameRef(panel).then(function(docRef) {
+        //      console.log("Document written with ID: ", docRef.id);
+        // })
         //    .catch(function(error) {
         //        console.error("Error adding document: ", error);
         //    });
@@ -203,7 +180,7 @@ class GamePageInitial extends Component {
     }
 
     render() {
-        const {done, admiral_0, kreuzer_0, kreuzer_1, destroyer_0, destroyer_1, destroyer_2, boat_0, boat_1, boat_2, boat_3, panel} = this.state;
+        const {done, tempShips, panel} = this.state;
 
         return (
             <div>
@@ -214,16 +191,7 @@ class GamePageInitial extends Component {
                         onRightClick={this.onRightClickPanel}
                     />
                     <Ships
-                        admiral_0={admiral_0}
-                        kreuzer_0={kreuzer_0}
-                        kreuzer_1={kreuzer_1}
-                        destroyer_0={destroyer_0}
-                        destroyer_1={destroyer_1}
-                        destroyer_2={destroyer_2}
-                        boat_0={boat_0}
-                        boat_1={boat_1}
-                        boat_2={boat_2}
-                        boat_3={boat_3}
+                        ships={tempShips}
                         onClick={this.onClickShip}
                         onRightClick={this.onRightClickShip}
                     />

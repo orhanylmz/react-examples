@@ -1,48 +1,76 @@
-export const generateAdmiral = () => {
-    let type = "admiral";
-    let name = type + "_" + 0;
+export const ADMIRAL = "admiral";
+export const KREUZER = "kreuzer";
+export const DESTROYER = "destroyer";
+export const BOAT = "boat";
+export const SHOT = "shot";
+export const MISS = "miss";
+export const LOADED = "loaded";
+
+export const tempShips = () => {
     return {
-        parts: [generateShipPart(type, name, 0), generateShipPart(type, name, 1), generateShipPart(type, name, 2), generateShipPart(type, name, 3)],
+        admiral: [tempAdmiral()],
+        kreuzer: [
+            tempKreuzer(0),
+            tempKreuzer(1)
+        ],
+        destroyer: [
+            tempDestroyer(0),
+            tempDestroyer(1),
+            tempDestroyer(2)
+        ],
+        boat: [
+            tempBoat(0),
+            tempBoat(1),
+            tempBoat(2),
+            tempBoat(3)
+        ]
+    }
+}
+
+const tempAdmiral = () => {
+    return {
+        parts: [part(ADMIRAL, 0, 0), part(ADMIRAL, 0, 1), part(ADMIRAL, 0, 2), part(ADMIRAL, 0, 3)],
         shot: false,
     }
 }
 
-export const generateKreuzer = (i) => {
-    let type = "kreuzer";
-    let name = type + "_" + i;
+const tempKreuzer = (index) => {
     return {
-        parts: [generateShipPart(type, name, 0), generateShipPart(type, name, 1), generateShipPart(type, name, 2)],
+        parts: [part(KREUZER, index, 0), part(KREUZER, index, 1), part(KREUZER, index, 2)],
         shot: false,
     }
 }
 
-export const generateDestroyer = (i) => {
-    let type = "destroyer";
-    let name = type + "_" + i;
+const tempDestroyer = (index) => {
     return {
-        parts: [generateShipPart(type, name, 0), generateShipPart(type, name, 1)],
+        parts: [part(DESTROYER, index, 0), part(DESTROYER, index, 1)],
         shot: false,
     }
 }
 
-export const generateBoat = (i) => {
-    let type = "boat";
-    let name = type + "_" + i;
+const tempBoat = (index) => {
     return {
-        parts: [generateShipPart(type, name, 0)],
+        parts: [part(BOAT, index, 0)],
         shot: false,
     }
 }
 
-const generateShipPart = (type, name, part) => {
-    return {
-        i: null,
-        j: null,
+/**
+ *
+ * @param i
+ * @param j
+ * @param type admiral or kreuzer or ...
+ * @param index 0, 1 for kreuzer, 0,1,2 for destroyer
+ * @param part 0, 1...
+ * @returns {{part: *, name: *, i: *, j: *, state: *, type: *, shot: number}}
+ */
+const part = (type, index, part) => ({
+    id: Math.random(),
+    content: {
+        shot: 0,
         type: type,
-        currentType: type,
-        name: name,
-        id: name + "_" + part,
+        index: index,
         part: part,
-        shot: null
+        state: type
     }
-}
+})

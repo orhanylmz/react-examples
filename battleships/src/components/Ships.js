@@ -9,23 +9,24 @@ import Destroyer from "./ships/Destroyer";
 import Boat from "./ships/Boat";
 
 const Ships = props => {
+    const {admiral, kreuzer, destroyer, boat} = props.ships;
     return (
         <div className={"grid grid-1-4"}>
-            <Admiral content={props.admiral_0} onClick={props.onClick} onRightClick={props.onRightClick}/>
+            <Admiral content={admiral[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             <div className={"grid grid-2"}>
-                <Kreuzer content={props.kreuzer_0} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Kreuzer content={props.kreuzer_1} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Kreuzer content={kreuzer[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Kreuzer content={kreuzer[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             </div>
             <div className={"grid grid-3"}>
-                <Destroyer content={props.destroyer_0} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Destroyer content={props.destroyer_1} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Destroyer content={props.destroyer_2} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Destroyer content={destroyer[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Destroyer content={destroyer[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Destroyer content={destroyer[2]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             </div>
             <div className={"grid grid-4"}>
-                <Boat content={props.boat_0} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Boat content={props.boat_1} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Boat content={props.boat_2} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Boat content={props.boat_3} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Boat content={boat[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Boat content={boat[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Boat content={boat[2]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Boat content={boat[3]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             </div>
         </div>
     );

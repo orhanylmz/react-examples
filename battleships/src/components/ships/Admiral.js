@@ -9,12 +9,12 @@ const Admiral = props => {
     return (
         <div className={"grid grid-1-2"}>
             <div className={"grid"}>
-                <Box content={props.content.parts[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box box={props.content.parts[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             </div>
             <div className={"ship-grid grid-3"}>
-                <Box content={props.content.parts[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Box content={props.content.parts[2]} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Box content={props.content.parts[3]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box box={props.content.parts[1]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box box={props.content.parts[2]} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box box={props.content.parts[3]} onClick={props.onClick} onRightClick={props.onRightClick}/>
             </div>
         </div>
     );

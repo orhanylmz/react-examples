@@ -3,58 +3,44 @@ import PropTypes from 'prop-types';
 
 import '../css/box.css'
 
-const findClassSuffix = ({content, currentType}) => {
-    if (content) {
-        if (content.name.indexOf("admiral") >= 0){
+import {ADMIRAL, KREUZER, DESTROYER, BOAT, SHOT, MISS, LOADED} from "../helpers/shipHelper";
+
+const findClassSuffix = (content) => {
+    if (content && content.state) {
+        if (content.state.indexOf(ADMIRAL) >= 0) {
             return " admiral";
-        } else if (content.name.indexOf("kreuzer") >= 0){
+        } else if (content.state.indexOf(KREUZER) >= 0) {
             return " kreuzer";
-        } else if (content.name.indexOf("destroyer") >= 0){
+        } else if (content.state.indexOf(DESTROYER) >= 0) {
             return " destroyer";
-        } else if (content.name.indexOf("boat") >= 0){
+        } else if (content.state.indexOf(BOAT) >= 0) {
             return " boat";
-        } else if (content.name.indexOf("shot") >= 0){
+        } else if (content.state.indexOf(SHOT) >= 0) {
             return " shot";
-        } else if (content.name.indexOf("miss") >= 0){
+        } else if (content.state.indexOf(MISS) >= 0) {
             return " miss";
+        } else if (content.state.indexOf(LOADED) >= 0) {
+            return "";
         }
     }
-
-    currentType = content ? content.currentType : currentType;
-    switch (currentType) {
-        case "admiral":
-            return " admiral";
-        case "kreuzer":
-            return " kreuzer";
-        case "destroyer":
-            return " destroyer";
-        case "boat":
-            return " boat";
-        case "shot":
-            return " shot";
-        case "miss":
-            return " miss";
-        default:
-            return "";
-    }
+    return "";
 }
 
-const Box = ({content, onClick, onRightClick}) => {
+const Box = ({box, onClick, onRightClick}) => {
     return (
         <div
-            id={content.id}
-            onClick={onClick && onClick(content)}
-            onContextMenu={onRightClick && onRightClick(content)}
-            className={"box bordered" + findClassSuffix(content)}
+            id={box.id}
+            onClick={onClick && onClick(box)}
+            onContextMenu={onRightClick && onRightClick(box)}
+            className={"box bordered" + findClassSuffix(box.content)}
         >
-            {content.value}
+            {box.content && box.content.value}
         </div>
     );
 };
 
 Box.propTypes = {
     content: PropTypes.shape({
-        type: PropTypes.string,
         name: PropTypes.string
     })
 };
