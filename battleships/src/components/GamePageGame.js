@@ -11,25 +11,32 @@ import {withFirebase} from "../firebase";
 
 class GamePageGame extends Component {
     state = {
-        minePanel: null,
-        awayPanel: null,
+        minePanel: null, //away Ships
+        awayPanel: null, //mine Ships
         shotList: [],
         totalShotOrder: 0,
         ships: tempShips()
     }
 
+    otherPlayer = () => {
+        if (this.props.whoAmI === "player1") {
+            return "player2";
+        }
+        return "player1";
+    }
+
     gameUpdated = (id, game) => {
-        console.log("Current data: ", game," " ,id);
+        console.log("Current data: ", game, " ", id);
         this.setState({
-            minePanel: mapShipsToPanel(game.player1.ships),
-            awayPanel: mapShipsToPanel(game.player2.ships)
+            minePanel: mapShipsToPanel(game[this.otherPlayer()].ships),
+            awayPanel: mapShipsToPanel(game[this.props.whoAmI].ships)
         })
     }
 
     componentDidMount() {
         const self = this;
         this.props.firebase.game(this.props.gameId)
-            .onSnapshot(function(doc) {
+            .onSnapshot(function (doc) {
                 self.gameUpdated(doc.id, doc.data())
             });
     }

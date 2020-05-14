@@ -9,6 +9,7 @@ class GamePageLoading extends Component {
     state = {
         games: null,
         gameId: null,
+        whoAmI: null,
         goToNextStep: false
     }
 
@@ -51,6 +52,7 @@ class GamePageLoading extends Component {
         }).then(function (docRef) {
             self.setState({
                 gameId: docRef.id,
+                whoAmI: "player1",
                 goToNextStep: true
             })
         }).catch(function (error) {
@@ -70,6 +72,7 @@ class GamePageLoading extends Component {
             state: "started"
         }).then(function (docRef) {
             self.setState({
+                whoAmI: "player2",
                 goToNextStep: true
             })
         }).catch(function (error) {

@@ -7,11 +7,12 @@ import GamePageUser from "../GamePageUser";
 
 class GamePage extends Component {
     state = {
-        step: 1,
+        step: 4,
         ships: null,
         name: "Orhan",
         surname: "Yılmaz",
-        gameId: null
+        gameId: "B2Gg767BBeNsH02VJiY3",
+        whoAmI: "player1"
     }
 
     setUserInfo = ({name, surname}) => {
@@ -29,15 +30,16 @@ class GamePage extends Component {
         })
     };
 
-    start = (gameId) => {
+    start = (gameId, whoAmI) => {
         this.setState({
             step: this.state.step + 1,
-            gameId: gameId
+            gameId: gameId,
+            whoAmI: whoAmI
         })
     };
 
     render() {
-        const {step, ships, name, surname, gameId} = this.state;
+        const {step, ships, name, surname, gameId, whoAmI} = this.state;
 
         console.log(gameId);
 
@@ -63,7 +65,7 @@ class GamePage extends Component {
             case 4:
                 return (
                     <div>
-                        <GamePageGame ships={ships} gameId={gameId}/>
+                        <GamePageGame ships={ships} gameId={gameId} whoAmI={whoAmI}/>
                     </div>
                 );
         }
