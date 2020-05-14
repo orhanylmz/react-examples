@@ -2,10 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const findClassSuffix = props => {
+    var suffix = "";
     if (props.disabled) {
-        return " disabled";
+        suffix += " disabled";
     }
-    return "";
+
+    if (props.left) {
+        suffix += " footer-left";
+    } else if (props.right) {
+        suffix += " footer-right";
+    }
+    return suffix;
 }
 
 const FooterButton = props => {

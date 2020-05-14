@@ -184,6 +184,7 @@ class GamePageInitial extends Component {
 
         return (
             <div>
+                <h2 className={"header"}>Welcome {this.props.name} {this.props.surname}</h2>
                 <div className={"grid grid-2"}>
                     <Panel
                         panel={panel}

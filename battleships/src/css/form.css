@@ -1,0 +1,12 @@
+.formArea {
+    width: 50%;
+    margin: 10% auto;
+}
+
+.formArea input {
+    margin-top: 1vh;
+    height: 5vh;
+    line-height: 10vh;
+    width: 50vw;
+    text-indent: 0.5vw;
+}

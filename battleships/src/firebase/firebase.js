@@ -22,8 +22,6 @@ class Firebase {
 
     games = () => this.firestore.collection("games");
 
-    createGameRef = () => this.games().add({state: "waiting"});
-
     waitingGamesRef = () => this.games().where("state", "==", "waiting");
 }
 

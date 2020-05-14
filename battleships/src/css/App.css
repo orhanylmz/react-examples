@@ -28,6 +28,17 @@
   color: #61dafb;
 }
 
+.header {
+  margin-top: 1vh;
+  width: 100%;
+  height: 5vh;
+  background-color: lightgrey;
+  color: black;
+  text-align: center;
+  font-size: 3vh;
+  font-family: "Comic Sans MS";
+}
+
 .action-button {
   width: 100%;
   height: 5vh;
@@ -46,6 +57,18 @@
   width: 80vw;
 }
 
+.footer-left {
+  position: fixed;
+  left: 10vw;
+  width: 40vw;
+}
+
+.footer-right {
+  position: fixed;
+  left: 50vw;
+  width: 40vw;
+}
+
 .disabled {
   background-color: lightgrey;
 }
@@ -57,4 +80,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+body {
+  padding: 40px 10% 20px 10%;
+}
+
+h1 {
+  padding: 20px 0;
+  font-size: 2.5em;
+  text-align: center;
+}
+
+table {
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  border-spacing: 2px;
+  border-color: grey;
+}
+
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
 }

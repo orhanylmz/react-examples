@@ -1,0 +1,43 @@
+.listArea {
+    width: 50%;
+    margin: 10% auto;
+    border: solid 1px aqua;
+    padding: 2vw;
+}
+
+input {
+    margin: auto;
+    height: 25px;
+    line-height: 25px;
+    width: 100%;
+    text-indent: 10px;
+}
+
+.list {
+
+}
+
+.list li {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    background-color: azure;
+    border-bottom: solid 1px aqua;
+}
+
+.list li span {
+    display: block;
+    font-size: 12px;
+}
+
+.list li span.name {
+    float: left;
+}
+
+.list li span.id {
+    float: right;
+}
+
+.clearfix {
+    clear: both;
+}

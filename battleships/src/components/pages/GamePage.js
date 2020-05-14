@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GamePageInitial from "../GamePageInitial";
 import GamePageLoading from "../GamePageLoading";
 import GamePageGame from "../GamePageGame";
+import GamePageUser from "../GamePageUser";
 
 class GamePage extends Component {
     state = {
@@ -11,6 +12,14 @@ class GamePage extends Component {
         name: "Orhan",
         surname: "Yılmaz"
     }
+
+    setUserInfo = ({name, surname}) => {
+        this.setState({
+            step: this.state.step + 1,
+            name,
+            surname
+        })
+    };
 
     nextStep = (ships) => {
         this.setState({
@@ -26,22 +35,28 @@ class GamePage extends Component {
     };
 
     render() {
-        const {step, ships} = this.state;
+        const {step, ships, name, surname} = this.state;
 
         switch (step) {
-            case 1:
+            case 4:
                 return (
                     <div>
-                        <GamePageInitial nextStep={this.nextStep}/>
+                        <GamePageUser  nextStep={this.setUserInfo}/>
                     </div>
                 );
             case 2:
                 return (
                     <div>
-                        <GamePageLoading nextStep={this.start}/>
+                        <GamePageInitial nextStep={this.nextStep} name={name} surname={surname}/>
                     </div>
                 );
-            case 3:
+            case 1:
+                return (
+                    <div>
+                        <GamePageLoading name={name} surname={surname} ships={ships} nextStep={this.start}/>
+                    </div>
+                );
+            case 4:
                 return (
                     <div>
                         <GamePageGame ships={ships}/>
