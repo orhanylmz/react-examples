@@ -33,12 +33,10 @@ class Games extends Component {
 }
 
 const GameRow = props =>
-    <div>
         <tr>
             <td>{props.game.name} {props.game.surname}</td>
             <td>{props.game.id}</td>
         </tr>
-    </div>
 ;
 
 class GameTable extends Component {
