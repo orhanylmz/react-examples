@@ -38,10 +38,10 @@ class GamePage extends Component {
         const {step, ships, name, surname} = this.state;
 
         switch (step) {
-            case 4:
+            case 1:
                 return (
                     <div>
-                        <GamePageUser  nextStep={this.setUserInfo}/>
+                        <GamePageUser nextStep={this.setUserInfo}/>
                     </div>
                 );
             case 2:
@@ -50,7 +50,7 @@ class GamePage extends Component {
                         <GamePageInitial nextStep={this.nextStep} name={name} surname={surname}/>
                     </div>
                 );
-            case 1:
+            case 3:
                 return (
                     <div>
                         <GamePageLoading name={name} surname={surname} ships={ships} nextStep={this.start}/>

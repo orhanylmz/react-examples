@@ -17,7 +17,7 @@ class Games extends Component {
 
     render() {
         return (
-            <div className={"container"}>
+            <div>
                 <h1>Games</h1>
                 <SearchBar
                     filterText={this.state.filterText}
