@@ -6,24 +6,31 @@ import Games from "./Games";
 import {withFirebase} from "../firebase";
 
 class GamePageLoading extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        games: null,
+        gameId: null,
+        goToNextStep: false
     }
 
-    state = {
-        games: null
+    componentDidMount() {
+        this.props.firebase.waitingGamesRef().onSnapshot(this.onCollectionUpdate);
+    }
+
+    handleGameSelected = (game) => {
+        console.log(game)
+        this.setState({
+            gameId: game.id
+        })
     }
 
     onCollectionUpdate = (querySnapshot) => {
         const games = [];
         querySnapshot.forEach((doc) => {
             const {id} = doc;
-            const {name, surname, ships, state} = doc.data();
+            const {player1, state} = doc.data();
             games.push({
                 id,
-                name,
-                surname,
-                ships,
+                player1,
                 state
             });
         });
@@ -32,30 +39,55 @@ class GamePageLoading extends Component {
         });
     };
 
-    refreshGame = () => {
-        this.props.firebase.waitingGamesRef().onSnapshot(this.onCollectionUpdate);
-    }
-
     createGame = () => {
+        const self = this;
         this.props.firebase.games().add({
-            name: this.props.name,
-            surname: this.props.surname,
-            ships: this.props.ships,
+            player1: {
+                name: this.props.name,
+                surname: this.props.surname,
+                ships: this.props.ships
+            },
             state: "waiting"
         }).then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
+            self.setState({
+                gameId: docRef.id,
+                goToNextStep: true
+            })
+        }).catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+    }
+
+    joinGame = () => {
+        const self = this;
+        const {gameId} = this.state;
+        this.props.firebase.games().doc(gameId).update({
+            player2: {
+                name: this.props.name,
+                surname: this.props.surname,
+                ships: this.props.ships
+            },
+            state: "started"
+        }).then(function (docRef) {
+            self.setState({
+                goToNextStep: true
+            })
         }).catch(function (error) {
             console.error("Error adding document: ", error);
         });
     }
 
     render() {
-        const {games} = this.state;
+        const {games, gameId, goToNextStep} = this.state;
 
-        console.log(games);
+        if (goToNextStep) {
+            this.props.nextStep(gameId);
+        }
+
         return (
             <div>
-                <Games games={games}/>
+                <Games games={games} handleGameSelected={this.handleGameSelected}
+                       selectedGameId={this.state.gameId}/>
                 <FooterButton
                     left
                     onClick={this.createGame}
@@ -63,8 +95,9 @@ class GamePageLoading extends Component {
                 />
                 <FooterButton
                     right
-                    onClick={this.refreshGame}
-                    value={"Refresh Games"}
+                    disabled={!gameId}
+                    onClick={this.joinGame}
+                    value={"Join Game"}
                 />
             </div>
         );

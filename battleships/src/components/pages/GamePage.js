@@ -10,7 +10,8 @@ class GamePage extends Component {
         step: 1,
         ships: null,
         name: "Orhan",
-        surname: "Yılmaz"
+        surname: "Yılmaz",
+        gameId: null
     }
 
     setUserInfo = ({name, surname}) => {
@@ -21,21 +22,24 @@ class GamePage extends Component {
         })
     };
 
-    nextStep = (ships) => {
+    setShips = (ships) => {
         this.setState({
             step: this.state.step + 1,
             ships: ships
         })
     };
 
-    start = () => {
+    start = (gameId) => {
         this.setState({
             step: this.state.step + 1,
+            gameId: gameId
         })
     };
 
     render() {
-        const {step, ships, name, surname} = this.state;
+        const {step, ships, name, surname, gameId} = this.state;
+
+        console.log(gameId);
 
         switch (step) {
             case 1:
@@ -47,7 +51,7 @@ class GamePage extends Component {
             case 2:
                 return (
                     <div>
-                        <GamePageInitial nextStep={this.nextStep} name={name} surname={surname}/>
+                        <GamePageInitial nextStep={this.setShips} name={name} surname={surname}/>
                     </div>
                 );
             case 3:
@@ -59,7 +63,7 @@ class GamePage extends Component {
             case 4:
                 return (
                     <div>
-                        <GamePageGame ships={ships}/>
+                        <GamePageGame ships={ships} gameId={gameId}/>
                     </div>
                 );
         }

@@ -2,85 +2,46 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import "../css/list.css"
-import GamePage from "./pages/GamePage";
+
+import {Table} from "semantic-ui-react";
+import 'semantic-ui-css/semantic.min.css';
 
 class Games extends Component {
-    state = {
-        filterText: ''
-    }
-
-    handleFilterTextInput = (filterText) => {
-        this.setState({
-            filterText: filterText
-        });
-    }
-
     render() {
         return (
             <div>
                 <h1>Games</h1>
-                <SearchBar
-                    filterText={this.state.filterText}
-                    onFilterTextInput={this.handleFilterTextInput}
-                />
-                <GameTable
-                    games={this.props.games}
-                    filterText={this.state.filterText}
+                <GameTable handleGameSelected={this.props.handleGameSelected}
+                           selectedGameId={this.props.selectedGameId}
+                           games={this.props.games}
                 />
             </div>
         );
     }
 }
 
-const GameRow = props =>
-        <tr>
-            <td>{props.game.name} {props.game.surname}</td>
-            <td>{props.game.id}</td>
-        </tr>
-;
-
-class GameTable extends Component {
-    render() {
-        var rows = [];
-        this.props.games && this.props.games.forEach((game) => {
-            if (game.name.indexOf(this.props.filterText) === -1) {
-                return;
+const GameTable = props =>
+    <Table called={"true"} selectable>
+        <Table.Header>
+            <Table.Row>
+                <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.HeaderCell>Game</Table.HeaderCell>
+            </Table.Row>
+        </Table.Header>
+        <Table.Body>
+            {
+                props.games && props.games.map((game) =>
+                    <Table.Row
+                        key={game.id}
+                        active={props.selectedGameId === game.id}
+                        onClick={() => props.handleGameSelected(game)}>
+                        <Table.Cell>{game.player1.name} {game.player1.surname}</Table.Cell>
+                        <Table.Cell>{game.id}</Table.Cell>
+                    </Table.Row>
+                )
             }
-            rows.push(<GameRow game={game}/>);
-        });
-        return (
-            <table className={"table"}>
-                <thead>
-                <tr>
-                    <th>Name Surname</th>
-                    <th>Game</th>
-                </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-            </table>
-        );
-    }
-}
-
-class SearchBar extends React.Component {
-    handleFilterTextInputChange = (e) => {
-        this.props.onFilterTextInput(e.target.value);
-    }
-
-    render() {
-        return (
-            <form>
-                <input
-                    className="form-control"
-                    type="text"
-                    placeholder="Search..."
-                    value={this.props.filterText}
-                    onChange={this.handleFilterTextInputChange}
-                />
-            </form>
-        );
-    }
-}
+        </Table.Body>
+    </Table>;
 
 Games.propTypes = {};
 

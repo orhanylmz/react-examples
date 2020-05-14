@@ -7,15 +7,36 @@ import {createPanel} from "../helpers/panelHelper";
 import {tempShips} from "../helpers/shipHelper";
 
 import {mapShipsToPanel} from "../helpers/playerHelper";
+import {withFirebase} from "../firebase";
 
 class GamePageGame extends Component {
     state = {
-        shotPanel: createPanel(),
+        minePanel: null,
+        awayPanel: null,
         shotList: [],
         totalShotOrder: 0,
-        otherPanel: null,
         ships: tempShips()
     }
+
+    gameUpdated = (id, game) => {
+        console.log("Current data: ", game," " ,id);
+        this.setState({
+            minePanel: mapShipsToPanel(game.player1.ships),
+            awayPanel: mapShipsToPanel(game.player2.ships)
+        })
+    }
+
+    componentDidMount() {
+        const self = this;
+        this.props.firebase.game(this.props.gameId)
+            .onSnapshot(function(doc) {
+                self.gameUpdated(doc.id, doc.data())
+            });
+    }
+
+    onCollectionUpdate = (doc) => {
+        console.log(doc.ref);
+    };
 
     onClickPanel = content => e => {
         e.preventDefault();
@@ -93,19 +114,19 @@ class GamePageGame extends Component {
     }
 
     render() {
-        const {shotList, shotPanel} = this.state;
+        const {minePanel, awayPanel, shotList} = this.state;
         const {ships} = this.props;
-        const otherPanel = mapShipsToPanel(ships)
         const loadedShot = shotList.length === 3;
 
         return (
             <div>
+                return;
                 <div className={"grid grid-3"}>
-                    <Panel panel={shotPanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel}/>
+                    <Panel panel={awayPanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel}/>
                     <button className={"action-button " + (!loadedShot ? "disabled" : "")} disabled={!loadedShot}
                             onClick={this.shot}>Shot
                     </button>
-                    <Panel panel={otherPanel}/>
+                    <Panel panel={minePanel}/>
                 </div>
                 <div className={"grid"}>
                     <Ships
@@ -119,4 +140,4 @@ class GamePageGame extends Component {
 
 GamePageGame.propTypes = {};
 
-export default GamePageGame;
+export default withFirebase(GamePageGame);
