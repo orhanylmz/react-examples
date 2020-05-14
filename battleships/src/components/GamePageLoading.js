@@ -33,15 +33,10 @@ class GamePageLoading extends Component {
     };
 
     refreshGame = () => {
-        var self = this;
-
-        console.log("Refresh Game")
-        this.props.firebase.waitingGamesRef(self).onSnapshot(this.onCollectionUpdate);
-
+        this.props.firebase.waitingGamesRef().onSnapshot(this.onCollectionUpdate);
     }
 
     createGame = () => {
-        console.log("Refresh Game")
         this.props.firebase.games().add({
             name: this.props.name,
             surname: this.props.surname,
