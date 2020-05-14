@@ -7,7 +7,7 @@ import GamePageUser from "../GamePageUser";
 
 class GamePage extends Component {
     state = {
-        step: 4,
+        step: 1,
         ships: null,
         name: "Orhan",
         surname: "Yılmaz",

@@ -9,13 +9,32 @@ import {tempShips} from "../helpers/shipHelper";
 import {mapShipsToPanel} from "../helpers/playerHelper";
 import {withFirebase} from "../firebase";
 
+import DotLoader from "react-spinners/DotLoader";
+import { css } from "@emotion/core";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+`;
+
 class GamePageGame extends Component {
     state = {
         minePanel: null, //away Ships
         awayPanel: null, //mine Ships
         shotList: [],
         totalShotOrder: 0,
-        ships: tempShips()
+        ships: tempShips(),
+        currentPlayer: null
+    }
+
+    playOrder = () => {
+        const {currentPlayer} = this.state;
+        const {whoAmI} = this.props;
+
+        if (whoAmI === currentPlayer) {
+            return true;
+        }
+        return false;
     }
 
     otherPlayer = () => {
@@ -26,10 +45,10 @@ class GamePageGame extends Component {
     }
 
     gameUpdated = (id, game) => {
-        console.log("Current data: ", game, " ", id);
         this.setState({
             minePanel: mapShipsToPanel(game[this.otherPlayer()].ships),
-            awayPanel: mapShipsToPanel(game[this.props.whoAmI].ships)
+            awayPanel: mapShipsToPanel(game[this.props.whoAmI].ships),
+            currentPlayer: game.currentPlayer
         })
     }
 
@@ -52,13 +71,13 @@ class GamePageGame extends Component {
             return;
         }
 
-        const {shotPanel, shotList, totalShotOrder} = this.state;
+        const {minePanel, shotList, totalShotOrder} = this.state;
 
         if (shotList.length === 3) {
             return;
         }
 
-        const newShotPanel = shotPanel.map(line => line.map(
+        const newMinePanel = minePanel.map(line => line.map(
             box => {
                 if (content.i === box.i && content.j === box.j) {
                     box = {
@@ -73,7 +92,7 @@ class GamePageGame extends Component {
         shotList.push(content);
 
         this.setState({
-            shotPanel: newShotPanel,
+            minePanel: newMinePanel,
             totalShotOrder: totalShotOrder + 1
         })
     }
@@ -123,17 +142,26 @@ class GamePageGame extends Component {
     render() {
         const {minePanel, awayPanel, shotList} = this.state;
         const {ships} = this.props;
-        const loadedShot = shotList.length === 3;
+        const playOrder = this.playOrder();
+        const enableShot = shotList.length === 3 && this.playOrder();
 
         return (
             <div>
-                return;
                 <div className={"grid grid-3"}>
-                    <Panel panel={awayPanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel}/>
-                    <button className={"action-button " + (!loadedShot ? "disabled" : "")} disabled={!loadedShot}
-                            onClick={this.shot}>Shot
-                    </button>
-                    <Panel panel={minePanel}/>
+                    <Panel panel={minePanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel}/>
+                    <div className={"grid grid-1"}>
+                        <DotLoader
+                            css={override}
+                            size={50}
+                            color={"#333333"}
+                            loading={!playOrder}
+                        />
+                        <button className={"action-button " + (!enableShot ? "disabled" : "")}
+                                disabled={!enableShot}
+                                onClick={this.shot}>Shot
+                        </button>
+                    </div>
+                    <Panel panel={awayPanel}/>
                 </div>
                 <div className={"grid"}>
                     <Ships

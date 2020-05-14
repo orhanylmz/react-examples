@@ -69,6 +69,7 @@ class GamePageLoading extends Component {
                 surname: this.props.surname,
                 ships: this.props.ships
             },
+            currentPlayer: "player1",
             state: "started"
         }).then(function (docRef) {
             self.setState({
@@ -81,10 +82,10 @@ class GamePageLoading extends Component {
     }
 
     render() {
-        const {games, gameId, goToNextStep} = this.state;
+        const {games, gameId, goToNextStep, whoAmI} = this.state;
 
         if (goToNextStep) {
-            this.props.nextStep(gameId);
+            this.props.nextStep(gameId, whoAmI);
         }
 
         return (
