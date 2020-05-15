@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Panel from "./Panel";
 import Ships from "./Ships";
+import ActionPanel from "./ActionPanel";
 
 import {tempShips} from "../helpers/shipHelper";
 import {mapPanelToShips} from "../helpers/playerHelper";
@@ -10,7 +11,7 @@ import {mapShipsToPanel} from "../helpers/playerHelper";
 import {withFirebase} from "../firebase";
 
 import DotLoader from "react-spinners/DotLoader";
-import { css } from "@emotion/core";
+import {css} from "@emotion/core";
 
 const override = css`
   display: block;
@@ -30,6 +31,10 @@ class GamePageGame extends Component {
     playOrder = () => {
         const {currentPlayer} = this.state;
         const {whoAmI} = this.props;
+
+        if (!currentPlayer){
+            return null;
+        }
 
         if (whoAmI === currentPlayer) {
             return true;
@@ -107,9 +112,6 @@ class GamePageGame extends Component {
             return;
         }
 
-        console.log(content.content.shot);
-        console.log(shotOrder);
-
         if (content.content.shot !== shotOrder) {
             return;
         }
@@ -134,7 +136,7 @@ class GamePageGame extends Component {
         const {shotOrder, minePanel} = this.state;
         const {gameId, whoAmI} = this.props;
 
-        const ships= mapPanelToShips(minePanel);
+        const ships = mapPanelToShips(minePanel);
         console.log(ships);
 
         this.props.firebase.game(gameId).update({
@@ -148,62 +150,22 @@ class GamePageGame extends Component {
             shotOrder: shotOrder + 1,
             shotList: []
         });
-
-        /*
-        this.props.firebase.games().doc(gameId).update({
-            player2: {
-                name: this.props.name,
-                surname: this.props.surname,
-                ships: this.props.ships
-            },
-            currentPlayer: "player1",
-            state: "started"
-        }).then(function (docRef) {
-            self.setState({
-                whoAmI: "player2",
-                goToNextStep: true
-            })
-        }).catch(function (error) {
-            console.error("Error adding document: ", error);
-        });
-         */
-
-        //FIXME
     }
 
     render() {
-        const {minePanel, awayPanel, shotList} = this.state;
+        const {minePanel, awayPanel, shotList, ships} = this.state;
         const playOrder = this.playOrder();
         const enableShot = shotList.length === 3 && this.playOrder();
 
-        if (minePanel){
-        const ships= mapPanelToShips(minePanel);
-        console.log(ships);
+        if (minePanel) {
+            const ships = mapPanelToShips(minePanel);
 
         }
         return (
-            <div>
-                <div className={"grid grid-3"}>
-                    <Panel panel={minePanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel}/>
-                    <div className={"grid grid-1"}>
-                        <DotLoader
-                            css={override}
-                            size={50}
-                            color={"#333333"}
-                            loading={!playOrder}
-                        />
-                        <button className={"action-button " + (!enableShot ? "disabled" : "")}
-                                disabled={!enableShot}
-                                onClick={this.shot}>Shot
-                        </button>
-                    </div>
-                    <Panel panel={awayPanel}/>
-                </div>
-                <div className={"grid"}>
-                    <Ships
-                        ships={this.state.ships}
-                    />
-                </div>
+            <div className={"grid grid-3"}>
+                <Panel panel={minePanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel}/>
+                <ActionPanel enableShot={enableShot} shot={this.shot} order={playOrder} ships={ships}/>
+                <Panel panel={awayPanel}/>
             </div>
         );
     }

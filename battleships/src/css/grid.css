@@ -1,7 +1,9 @@
 .grid {
     display: grid;
     background-color: white;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
     padding-top: 1vh;
 }
 
@@ -20,6 +22,12 @@
 .grid-1-4 {
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto;
+}
+
+.grid-1-3 {
+    grid-template-columns: auto;
+    grid-template-rows: 20% 35% 35%;
+    height: 90vh;
 }
 
 .grid-1-2 {

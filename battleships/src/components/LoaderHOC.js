@@ -10,16 +10,14 @@ const override = css`
 const LoaderHOC = (WrappedComponent, field) => {
     return class LoaderHOC extends Component {
         render() {
-            return (this.props[field] == null || this.props[field].length === 0)
-             ?
-                <DotLoader
+            return !this.props[field]
+                ? <DotLoader
                     css={override}
                     size={50}
                     color={"#333333"}
                     loading={true}
                 />
-                :
-                <WrappedComponent {...this.props}/>;
+                : <WrappedComponent {...this.props}/>;
         }
     }
 };
