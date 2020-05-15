@@ -7,7 +7,7 @@ import GamePageUser from "../GamePageUser";
 
 class GamePage extends Component {
     state = {
-        step: 1,
+        step: 4,
         ships: null,
         name: "Orhan",
         surname: "Yılmaz",
@@ -40,8 +40,6 @@ class GamePage extends Component {
 
     render() {
         const {step, ships, name, surname, gameId, whoAmI} = this.state;
-
-        console.log(gameId);
 
         switch (step) {
             case 1:

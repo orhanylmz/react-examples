@@ -12,8 +12,7 @@ export const generatePlayer = (name, username, panel) => {
 
 export const mapPanelToShips = (panel) => {
     const contents = panel.flat().filter(item => item.content !== null);
-    console.log(contents.length)
-    if (contents.length !== 20) {
+    if (contents.length < 20) {
         return;
     }
 
@@ -27,6 +26,13 @@ export const mapPanelToShips = (panel) => {
     const boat2 = contents.filter(item => item.content.type === BOAT && item.content.index === 1);
     const boat3 = contents.filter(item => item.content.type === BOAT && item.content.index === 2);
     const boat4 = contents.filter(item => item.content.type === BOAT && item.content.index === 3);
+    const miss = contents.filter(item =>
+        item.content.type !== BOAT &&
+        item.content.type !== DESTROYER &&
+        item.content.type !== KREUZER &&
+        item.content.type !== ADMIRAL &&
+        item.content.shot > 0
+    );
 
     return {
         admiral: [generateShip(admiral, 4)],
@@ -44,14 +50,17 @@ export const mapPanelToShips = (panel) => {
             generateShip(boat2, 1),
             generateShip(boat3, 1),
             generateShip(boat4, 1)
-        ]
+        ],
+        miss: [generateMiss(miss)]
     }
 }
 
-export const mapShipsToPanel = (ships) => {
-    const {admiral, kreuzer, destroyer, boat} = ships;
+export const mapShipsToPanel = (ships, panel) => {
+    const {admiral, kreuzer, destroyer, boat, miss} = ships;
 
-    const panel = createPanel();
+    if (panel == null) {
+        panel = createPanel();
+    }
     addPanel(admiral[0], panel);
     addPanel(kreuzer[0], panel);
     addPanel(kreuzer[1], panel);
@@ -62,6 +71,9 @@ export const mapShipsToPanel = (ships) => {
     addPanel(boat[1], panel);
     addPanel(boat[2], panel);
     addPanel(boat[3], panel);
+    miss && miss.map(missone => {
+        addPanel(missone, panel)
+    });
 
     return panel;
 }
@@ -88,14 +100,30 @@ const generateShip = (ship, partSize) => {
     }
 }
 
+const generateMiss = (miss) => {
+    let parts = [];
+    miss.map(mPart => parts.push(missPart(mPart)));
+    return {
+        parts,
+        shot: false
+    }
+}
+
+const missPart = (part) => ({
+    i: part.content.i,
+    j: part.content.j,
+    state: "miss",
+    shot: part.content.shot
+});
+
 const part = (shipPart) => ({
     i: shipPart.content.i,
     j: shipPart.content.j,
     type: shipPart.content.type,
     index: shipPart.content.index,
     part: shipPart.content.part,
-    state: shipPart.content.type,
-    shot: 0
+    state: shipPart.content.shot ? "shot" : shipPart.content.type,
+    shot: shipPart.content.shot ? shipPart.content.shot : 0
 });
 
 
