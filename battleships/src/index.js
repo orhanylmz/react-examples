@@ -14,7 +14,6 @@ import thunk from "redux-thunk";
 import logger from 'redux-logger';
 
 import Firebase, {FirebaseContext} from './firebase';
-import GamePage from "./components/pages/GamePage";
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, logger)))
 

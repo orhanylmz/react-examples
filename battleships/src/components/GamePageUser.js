@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import FooterButton from "./FooterButton";
 
-import '../css/form.css'
+import {Button, Container, Form} from 'semantic-ui-react'
+
+import "semantic-ui-css/semantic.min.css";
+import "./../css/form.css"
 
 class GamePageUser extends Component {
     state = {
         name: "",
         surname: "",
+        loading: false
     }
 
     onChange = e => {
@@ -17,26 +21,27 @@ class GamePageUser extends Component {
     }
 
     onSubmit = () => {
+        this.setState({
+            loading: true
+        })
         this.props.nextStep(this.state);
     }
 
-
     render() {
-        return (
-            <div>
-                <form className={"formArea"} onSubmit={this.onSubmit}>
-                    <input name={"name"} id={"name"} onChange={this.onChange} value={this.state.name}
-                           placeholder={"Enter Name"}/>
-                    <br/>
-                    <input name={"surname"} id={"surname"} onChange={this.onChange} value={this.state.surname}
-                           placeholder={"Enter Surname"}/>
-                    <br/>
-                    <FooterButton
-                        disabled={this.state.name.length <= 0 || this.state.surname.length <= 0}
-                        value={"Next"}
-                    />
-                </form>
+        const {name, surname, loading} = this.state;
+        const enableButton = name && surname;
 
+        return (
+            <div className={"formArea"}>
+                <Form onSubmit={this.onSubmit} loading={loading}>
+                    <Form.Field>
+                        <input name={"name"} placeholder='First Name' value={name} onChange={this.onChange}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <input name={"surname"} placeholder='Last Name' value={surname} onChange={this.onChange}/>
+                    </Form.Field>
+                    <Button type='submit' disabled={!enableButton} className={"action-button"}>Submit</Button>
+                </Form>
             </div>
         );
     }

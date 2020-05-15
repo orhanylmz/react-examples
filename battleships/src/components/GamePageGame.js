@@ -48,7 +48,7 @@ class GamePageGame extends Component {
         const {minePanel, awayPanel} = this.state;
 
         this.setState({
-            minePanel: mapShipsToPanel(game[this.otherPlayer()].ships, minePanel),
+            minePanel: game[this.otherPlayer()] ? mapShipsToPanel(game[this.otherPlayer()].ships, minePanel) : null,
             awayPanel: mapShipsToPanel(game[this.props.whoAmI].ships, awayPanel),
             currentPlayer: game.currentPlayer
         })

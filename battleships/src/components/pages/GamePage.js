@@ -5,12 +5,14 @@ import GamePageLoading from "../GamePageLoading";
 import GamePageGame from "../GamePageGame";
 import GamePageUser from "../GamePageUser";
 
+import Stepper from "../Stepper";
+
 class GamePage extends Component {
     state = {
-        step: 4,
+        step: 1,
         ships: null,
-        name: "Orhan",
-        surname: "Yılmaz",
+        name: null,
+        surname: null,
         gameId: "B2Gg767BBeNsH02VJiY3",
         whoAmI: "player1"
     }
@@ -41,32 +43,19 @@ class GamePage extends Component {
     render() {
         const {step, ships, name, surname, gameId, whoAmI} = this.state;
 
-        switch (step) {
-            case 1:
-                return (
-                    <div>
-                        <GamePageUser nextStep={this.setUserInfo}/>
-                    </div>
-                );
-            case 2:
-                return (
-                    <div>
-                        <GamePageInitial nextStep={this.setShips} name={name} surname={surname}/>
-                    </div>
-                );
-            case 3:
-                return (
-                    <div>
-                        <GamePageLoading name={name} surname={surname} ships={ships} nextStep={this.start}/>
-                    </div>
-                );
-            case 4:
-                return (
-                    <div>
-                        <GamePageGame ships={ships} gameId={gameId} whoAmI={whoAmI}/>
-                    </div>
-                );
-        }
+        const value = (
+            <div>
+                <Stepper step={step} name={name ? name + " " + surname : null}/>
+                {
+                    step === 1 ? <GamePageUser nextStep={this.setUserInfo}/>
+                        : step === 2 ? <GamePageInitial nextStep={this.setShips}/>
+                        : step === 3 ? <GamePageLoading name={name} surname={surname} ships={ships} nextStep={this.start}/>
+                        : step === 4 ? <GamePageGame ships={ships} gameId={gameId} whoAmI={whoAmI}/> : null
+                }
+            </div>
+        );
+
+        return value;
     }
 }
 

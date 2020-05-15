@@ -9,7 +9,8 @@ import {LOADED, tempShips} from "../helpers/shipHelper";
 
 import {withFirebase} from "../firebase";
 
-import {generatePlayer, mapPanelToShips} from "../helpers/playerHelper";
+import {mapPanelToShips} from "../helpers/playerHelper";
+import {Button, Form} from "semantic-ui-react";
 
 class GamePageInitial extends Component {
     state = {
@@ -135,47 +136,7 @@ class GamePageInitial extends Component {
     }
 
     onClickNextStep = () => {
-        /*
-         this.props.firebase.firestore.collection("admiral").get().then((querySnapshot) => {
-             querySnapshot.forEach((doc) => {
-                 console.log(`${doc.id} => ${JSON.stringify(doc.data().parts)}`);
-             });
-         });
-
-         */
-
-        /*  this.props.firebase.firestore.collection("part").doc("wmSB2ERIu74Wjk03YGGG").set({
-              i: "7",
-            // j: "1",
-              shot: 1
-          }, { merge: true })
-              .then(function() {
-                  console.log("Document successfully written!");
-              })
-              .catch(function(error) {
-                  console.error("Error writing document: ", error);
-              });
-
-         */
-
         const ships = mapPanelToShips(this.state.panel);
-
-        /*  this.props.firebase.firestore.collection("player").add(player)
-              .then(function() {
-                  console.log("Document successfully written!");
-              })
-              .catch(function(error) {
-                  console.error("Error writing document: ", error);
-              });
-         */
-
-        //   const {panel} = this.state;
-        // this.props.firebase.createGameRef(panel).then(function(docRef) {
-        //      console.log("Document written with ID: ", docRef.id);
-        // })
-        //    .catch(function(error) {
-        //        console.error("Error adding document: ", error);
-        //    });
         this.props.nextStep(ships);
     }
 
@@ -184,7 +145,6 @@ class GamePageInitial extends Component {
 
         return (
             <div>
-                <h2 className={"header"}>Welcome {this.props.name} {this.props.surname}</h2>
                 <div className={"grid grid-2"}>
                     <Panel
                         panel={panel}

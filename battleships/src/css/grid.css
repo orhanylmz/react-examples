@@ -42,6 +42,6 @@
 .panel {
     grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-    width: 26vw;
-    height: 26vw;
+    width: 25vw;
+    height: 50vh;
 }
