@@ -18,7 +18,6 @@ class GamePageLoading extends Component {
     }
 
     handleGameSelected = (game) => {
-        console.log(game)
         this.setState({
             gameId: game.id
         })

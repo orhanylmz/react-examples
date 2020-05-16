@@ -10,14 +10,6 @@ import {mapPanelToShips} from "../helpers/playerHelper";
 import {mapShipsToPanel} from "../helpers/playerHelper";
 import {withFirebase} from "../firebase";
 
-import DotLoader from "react-spinners/DotLoader";
-import {css} from "@emotion/core";
-
-const override = css`
-  display: block;
-  margin: 0 auto;
-`;
-
 class GamePageGame extends Component {
     state = {
         minePanel: null, //away Ships
@@ -70,11 +62,9 @@ class GamePageGame extends Component {
     onClickPanel = content => e => {
         e.preventDefault();
 
-        console.log(content);
         if (content.content && content.content.shot > 0) {
             return;
         }
-        console.log(content);
 
         const {minePanel, shotList, shotOrder} = this.state;
 
@@ -130,10 +120,9 @@ class GamePageGame extends Component {
 
     shot = () => {
         const {shotOrder, minePanel} = this.state;
-        const {gameId, whoAmI} = this.props;
+        const {gameId} = this.props;
 
         const ships = mapPanelToShips(minePanel);
-        console.log(ships);
 
         this.props.firebase.game(gameId).update({
             currentPlayer: this.otherPlayer(),

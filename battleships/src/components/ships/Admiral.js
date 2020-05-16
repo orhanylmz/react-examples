@@ -15,7 +15,6 @@ const Admiral = props => {
         }
     }
 
-    props.content.parts[1] && console.log(props.content.parts[1]);
     return (
         <div className={"grid grid-1-2"}>
             <div className={"grid"}>

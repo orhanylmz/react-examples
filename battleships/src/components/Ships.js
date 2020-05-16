@@ -15,7 +15,6 @@ const Ships = props => {
     if (!ships){
         ships = tempShips();
     }
-    console.log(ships)
     const {admiral, kreuzer, destroyer, boat} = ships;
     return (
         <div className={"grid grid-1-4"}>
