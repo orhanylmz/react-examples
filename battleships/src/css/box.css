@@ -30,3 +30,7 @@
 .shot {
     opacity: 0.4;
 }
+
+.loaded {
+    background-color: white;
+}

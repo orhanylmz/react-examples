@@ -133,7 +133,7 @@ class GamePageInitial extends Component {
     }
 
     onClickNextStep = () => {
-        const ships = mapPanelToShips(this.state.panel);
+        const ships = mapPanelToShips(this.state.panel, true);
         this.props.nextStep(ships);
     }
 
