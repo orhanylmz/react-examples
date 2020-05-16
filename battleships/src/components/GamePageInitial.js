@@ -7,8 +7,6 @@ import FooterButton from "./FooterButton";
 import {createPanel} from "../helpers/panelHelper";
 import {LOADED, tempShips} from "../helpers/shipHelper";
 
-import {withFirebase} from "../firebase";
-
 import {mapPanelToShips} from "../helpers/playerHelper";
 import {Button, Form} from "semantic-ui-react";
 
@@ -169,4 +167,4 @@ class GamePageInitial extends Component {
 
 GamePageInitial.propTypes = {};
 
-export default withFirebase(GamePageInitial);
+export default GamePageInitial;
