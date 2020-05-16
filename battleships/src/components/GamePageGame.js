@@ -148,7 +148,7 @@ class GamePageGame extends Component {
         }
         return (
             <div className={"grid grid-3"}>
-                <Panel panel={minePanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel} onlyShot={true}/>
+                <Panel panel={minePanel} loading={minePanel === null} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel} onlyShot={true}/>
                 <ActionPanel enableShot={enableShot} shot={this.shot} order={playOrder} ships={ships}/>
                 <Panel panel={awayPanel}/>
             </div>

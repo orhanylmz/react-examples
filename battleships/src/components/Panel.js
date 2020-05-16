@@ -6,6 +6,8 @@ import Box from "./Box";
 import '../css/grid.css'
 import {createPanel} from "../helpers/panelHelper";
 
+import {Segment} from "semantic-ui-react";
+
 const Panel = props => {
     let panel = props.panel;
     if (!panel) {
@@ -13,21 +15,23 @@ const Panel = props => {
     }
 
     return (
-        <div className={"grid panel"}>
-            {
-                panel.map(line =>
-                    line.map(box =>
-                        <Box
-                            key={box.id}
-                            onClick={props.onClick}
-                            onRightClick={props.onRightClick}
-                            box={box}
-                            onlyShot={props.onlyShot}
-                        />
+        <Segment loading={props.loading} basic={true}>
+            <div className={"grid panel"}>
+                {
+                    panel.map(line =>
+                        line.map(box =>
+                            <Box
+                                key={box.id}
+                                onClick={props.onClick}
+                                onRightClick={props.onRightClick}
+                                box={box}
+                                onlyShot={props.onlyShot}
+                            />
+                        )
                     )
-                )
-            }
-        </div>
+                }
+            </div>
+        </Segment>
     );
 };
 
