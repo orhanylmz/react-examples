@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import FooterButton from "./FooterButton";
 
-import {Button, Container, Form} from 'semantic-ui-react'
+import {Button, Segment, Form} from 'semantic-ui-react'
 
 import "semantic-ui-css/semantic.min.css";
 import "./../css/form.css"
@@ -33,15 +33,17 @@ class GamePageUser extends Component {
 
         return (
             <div className={"formArea"}>
-                <Form onSubmit={this.onSubmit} loading={loading}>
-                    <Form.Field>
-                        <input name={"name"} placeholder='First Name' value={name} onChange={this.onChange}/>
-                    </Form.Field>
-                    <Form.Field>
-                        <input name={"surname"} placeholder='Last Name' value={surname} onChange={this.onChange}/>
-                    </Form.Field>
-                    <Button type='submit' disabled={!enableButton} className={"action-button"}>Submit</Button>
-                </Form>
+                <Segment attached>
+                    <Form onSubmit={this.onSubmit} loading={loading}>
+                        <Form.Field>
+                            <input name={"name"} placeholder='First Name' value={name} onChange={this.onChange}/>
+                        </Form.Field>
+                        <Form.Field>
+                            <input name={"surname"} placeholder='Last Name' value={surname} onChange={this.onChange}/>
+                        </Form.Field>
+                        <Button type={"submit"} disabled={!enableButton} className={"action-button"}>Next</Button>
+                    </Form>
+                </Segment>
             </div>
         );
     }
