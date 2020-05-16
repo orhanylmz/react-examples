@@ -6,9 +6,9 @@ import '../css/box.css'
 import {ADMIRAL, KREUZER, DESTROYER, BOAT, SHOT, MISS, LOADED} from "../helpers/shipHelper";
 
 const findClassSuffix = (content, onlyShot) => {
-    // if (onlyShot){
-    //     return "";
-    // }
+    if (onlyShot){
+        return "";
+    }
     let suffix = "";
     if (content){
         if (content.type){

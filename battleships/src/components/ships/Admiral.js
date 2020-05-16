@@ -19,12 +19,12 @@ const Admiral = props => {
     return (
         <div className={"grid grid-1-2"}>
             <div className={"grid"}>
-                <Box box={box(props.content.parts[0])} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box box={box(props.content.parts[0])} onClick={props.onClick} onRightClick={props.onRightClick} onlyShot={props.onlyShot}/>
             </div>
             <div className={"ship-grid grid-3"}>
-                <Box box={box(props.content.parts[1])} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Box box={box(props.content.parts[2])} onClick={props.onClick} onRightClick={props.onRightClick}/>
-                <Box box={box(props.content.parts[3])} onClick={props.onClick} onRightClick={props.onRightClick}/>
+                <Box box={box(props.content.parts[1])} onClick={props.onClick} onRightClick={props.onRightClick} onlyShot={props.onlyShot}/>
+                <Box box={box(props.content.parts[2])} onClick={props.onClick} onRightClick={props.onRightClick} onlyShot={props.onlyShot}/>
+                <Box box={box(props.content.parts[3])} onClick={props.onClick} onRightClick={props.onRightClick} onlyShot={props.onlyShot}/>
             </div>
         </div>
     );

@@ -67,10 +67,6 @@ class GamePageGame extends Component {
             });
     }
 
-    onCollectionUpdate = (doc) => {
-        console.log(doc.ref);
-    };
-
     onClickPanel = content => e => {
         e.preventDefault();
 

@@ -14,10 +14,11 @@ const ActionPanel = props => {
             <div className={"grid"}>
                 <Icon name={iconName} size='massive'/>
             </div>
-            <ShotButton loading={order} enableShot={props.enableShot} shot={props.shot}/>
+            <ShotButton loading={order} enableShot={props.enableShot} shot={props.shot} />
             <div className={"grid"}>
                 <Ships
                     ships={props.ships}
+                    onlyShot={true}
                 />
             </div>
         </div>

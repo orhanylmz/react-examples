@@ -9,12 +9,12 @@ import Stepper from "../Stepper";
 
 class GamePage extends Component {
     state = {
-        step: 4,
+        step: 1,
         ships: null,
         name: null,
         surname: null,
         gameId: "du25WA9Ze79NiVepjJt5",
-        whoAmI: "player1"
+        whoAmI: "player2"
     }
 
     setUserInfo = ({name, surname}) => {
