@@ -22,6 +22,7 @@ const Panel = props => {
                             onClick={props.onClick}
                             onRightClick={props.onRightClick}
                             box={box}
+                            onlyShot={props.onlyShot}
                         />
                     )
                 )

@@ -153,17 +153,17 @@ class GamePageGame extends Component {
     }
 
     render() {
-        const {minePanel, awayPanel, shotList, ships} = this.state;
+        const {minePanel, awayPanel, shotList} = this.state;
         const playOrder = this.playOrder();
         const enableShot = shotList.length === 3 && this.playOrder();
 
+        let ships = null;
         if (minePanel) {
-            const ships = mapPanelToShips(minePanel);
-
+            ships = mapPanelToShips(minePanel);
         }
         return (
             <div className={"grid grid-3"}>
-                <Panel panel={minePanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel}/>
+                <Panel panel={minePanel} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel} onlyShot={true}/>
                 <ActionPanel enableShot={enableShot} shot={this.shot} order={playOrder} ships={ships}/>
                 <Panel panel={awayPanel}/>
             </div>

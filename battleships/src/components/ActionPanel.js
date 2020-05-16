@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {Icon} from 'semantic-ui-react'
 
-import PlayButton from "./ShotButton";
+import ShotButton from "./ShotButton";
 import Ships from "./Ships";
 
 const ActionPanel = props => {
@@ -14,7 +14,7 @@ const ActionPanel = props => {
             <div className={"grid"}>
                 <Icon name={iconName} size='massive'/>
             </div>
-            <PlayButton loading={order} enableShot={props.enableShot} shot={props.shot}/>
+            <ShotButton loading={order} enableShot={props.enableShot} shot={props.shot}/>
             <div className={"grid"}>
                 <Ships
                     ships={props.ships}

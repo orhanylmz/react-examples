@@ -5,7 +5,20 @@ import '../css/box.css'
 
 import {ADMIRAL, KREUZER, DESTROYER, BOAT, SHOT, MISS, LOADED} from "../helpers/shipHelper";
 
-const findClassSuffix = (content) => {
+const findClassSuffix = (content, onlyShot) => {
+    // if (onlyShot){
+    //     return "";
+    // }
+    let suffix = "";
+    if (content){
+        if (content.type){
+            suffix += " "+content.type;
+        }
+        if (content.state){
+            suffix += " "+content.state;
+        }
+    }
+    return suffix;
     if (content && content.state) {
         if (content.state.indexOf(SHOT) >= 0) {
             return " shot";
@@ -26,13 +39,13 @@ const findClassSuffix = (content) => {
     return "";
 }
 
-const Box = ({box, onClick, onRightClick}) => {
+const Box = ({box, onClick, onRightClick, onlyShot}) => {
     return (
         <div
             id={box.id}
             onClick={onClick && onClick(box)}
             onContextMenu={onRightClick && onRightClick(box)}
-            className={"box bordered" + findClassSuffix(box.content)}
+            className={"box bordered" + findClassSuffix(box.content, onlyShot)}
         >
             {box.content && box.content.shot > 0 && box.content.shot}
         </div>

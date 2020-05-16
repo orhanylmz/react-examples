@@ -12,25 +12,21 @@
 }
 
 .admiral {
-    background-color: #333333;
+    background-color: red;
 }
 
 .kreuzer {
-    background-color: #6A6A6A;
+    background-color: blue;
 }
 
 .destroyer {
-    background-color: #A0A0A0;
+    background-color: green;
 }
 
 .boat {
-    background-color: #D7D7D7;
-}
-
-.miss {
-    background-color: #61DAFB;
+    background-color: yellow;
 }
 
 .shot {
-    background-color: #FF0000;
+    opacity: 0.4;
 }

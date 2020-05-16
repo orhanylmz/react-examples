@@ -8,8 +8,15 @@ import Kreuzer from "./ships/Kreuzer";
 import Destroyer from "./ships/Destroyer";
 import Boat from "./ships/Boat";
 
+import {tempShips} from "../helpers/shipHelper";
+
 const Ships = props => {
-    const {admiral, kreuzer, destroyer, boat} = props.ships;
+    let ships = props.ships;
+    if (!ships){
+        ships = tempShips();
+    }
+    console.log(ships)
+    const {admiral, kreuzer, destroyer, boat} = ships;
     return (
         <div className={"grid grid-1-4"}>
             <Admiral content={admiral[0]} onClick={props.onClick} onRightClick={props.onRightClick}/>
