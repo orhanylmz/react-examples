@@ -24,7 +24,7 @@ class GamePageGame extends Component {
         const {currentPlayer} = this.state;
         const {whoAmI} = this.props;
 
-        if (!currentPlayer){
+        if (!currentPlayer) {
             return null;
         }
 
@@ -44,10 +44,18 @@ class GamePageGame extends Component {
     gameUpdated = (id, game) => {
         const {minePanel, awayPanel} = this.state;
 
+        const newMinePanel = game[this.otherPlayer()] ? mapShipsToPanel(game[this.otherPlayer()].ships, minePanel) : null;
+        const newAwayPanel = mapShipsToPanel(game[this.props.whoAmI].ships, awayPanel);
+        let shotOrder = this.state.shotOrder;
+        if (newMinePanel){
+            shotOrder = Math.max(...newMinePanel.flat().map(content => content.content ? Number(content.content.shot) : 0)) + 1;
+        }
+
         this.setState({
-            minePanel: game[this.otherPlayer()] ? mapShipsToPanel(game[this.otherPlayer()].ships, minePanel) : null,
-            awayPanel: mapShipsToPanel(game[this.props.whoAmI].ships, awayPanel),
-            currentPlayer: game.currentPlayer
+            minePanel: newMinePanel,
+            awayPanel: newAwayPanel,
+            currentPlayer: game.currentPlayer,
+            shotOrder: shotOrder
         })
     }
 
