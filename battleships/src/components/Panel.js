@@ -15,7 +15,7 @@ const Panel = props => {
     }
 
     return (
-        <Segment loading={props.loading} basic={true}>
+        <Segment loading={props.loading} basic={true} compact>
             <div className={"grid panel"}>
                 {
                     panel.map(line =>

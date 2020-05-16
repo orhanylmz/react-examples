@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import FooterButton from "./FooterButton";
 
 import {Button, Segment, Form, Input} from 'semantic-ui-react'
 
@@ -41,7 +40,7 @@ class GamePageUser extends Component {
                         <Form.Field>
                             <Input name={"surname"} placeholder='Last Name' value={surname} onChange={this.onChange}/>
                         </Form.Field>
-                        <Button type={"submit"} disabled={!enableButton} className={"action-button"}>Next</Button>
+                        <Button type={"submit"} disabled={!enableButton} className={"action-button"} content={"Next"}/>
                     </Form>
                 </Segment>
             </div>
