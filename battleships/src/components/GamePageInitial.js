@@ -5,9 +5,10 @@ import Ships from "./Ships";
 import FooterButton from "./FooterButton";
 
 import {createPanel} from "../helpers/panelHelper";
-import {LOADED, tempShips} from "../helpers/shipHelper";
+import {ADMIRAL, BOAT, DESTROYER, KREUZER, LOADED, tempShips} from "../helpers/shipHelper";
 
-import {mapPanelToShips} from "../helpers/playerHelper";
+import {mapPanelToShips, validateShips, generateShip} from "../helpers/playerHelper";
+import {Button} from "semantic-ui-react";
 
 class GamePageInitial extends Component {
     state = {
@@ -133,7 +134,12 @@ class GamePageInitial extends Component {
     }
 
     onClickNextStep = () => {
-        const ships = mapPanelToShips(this.state.panel, true);
+        const ships = mapPanelToShips(this.state.panel);
+        const validate = validateShips(ships);
+        if (validate !== true){
+            console.log(validate);
+            return;
+        }
         this.props.nextStep(ships);
     }
 

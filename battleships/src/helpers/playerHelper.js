@@ -2,32 +2,22 @@ import {createPanel} from "./panelHelper";
 
 import {ADMIRAL, KREUZER, DESTROYER, BOAT} from "./shipHelper";
 
-export const mapPanelToShips = (panel, validate) => {
+export const mapPanelToShips = (panel) => {
     const contents = panel.flat().filter(item => item.content !== null);
     if (contents.length < 20) {
         return;
     }
 
     const admiral = generateShip(contents.filter(item => item.content.type === ADMIRAL), 4);
-    validate && validateAdmiral(admiral);
     const kreuzer1 = generateShip(contents.filter(item => item.content.type === KREUZER && item.content.index === 0), 3);
-    validate && validateKreuzer(kreuzer1);
     const kreuzer2 = generateShip(contents.filter(item => item.content.type === KREUZER && item.content.index === 1), 3);
-    validate && validateKreuzer(kreuzer2);
     const destroyer1 = generateShip(contents.filter(item => item.content.type === DESTROYER && item.content.index === 0), 2);
-    validate && validateDestroyer(destroyer1);
     const destroyer2 = generateShip(contents.filter(item => item.content.type === DESTROYER && item.content.index === 1), 2);
-    validate && validateDestroyer(destroyer2);
     const destroyer3 = generateShip(contents.filter(item => item.content.type === DESTROYER && item.content.index === 2), 2);
-    validate && validateDestroyer(destroyer3);
     const boat1 = generateShip(contents.filter(item => item.content.type === BOAT && item.content.index === 0), 1);
-    validate && validateBoat(boat1);
     const boat2 = generateShip(contents.filter(item => item.content.type === BOAT && item.content.index === 1), 1);
-    validate && validateBoat(boat2);
     const boat3 = generateShip(contents.filter(item => item.content.type === BOAT && item.content.index === 2), 1);
-    validate && validateBoat(boat3);
     const boat4 = generateShip(contents.filter(item => item.content.type === BOAT && item.content.index === 3), 1);
-    validate && validateBoat(boat4);
     const miss = generateMiss(contents.filter(item => item.content.type !== BOAT && item.content.type !== DESTROYER && item.content.type !== KREUZER && item.content.type !== ADMIRAL && item.content.shot > 0));
 
     return {
@@ -37,6 +27,55 @@ export const mapPanelToShips = (panel, validate) => {
         boat: [boat1, boat2, boat3, boat4],
         miss: [miss]
     }
+}
+
+export const validateShips = (ships) => {
+    if (!ships) {
+        return;
+    }
+    const {admiral, kreuzer, destroyer, boat} = ships;
+
+    if (!validateAdmiral(admiral[0])){
+        return "admiral";
+    }
+
+    if (!validateKreuzer(kreuzer[0])){
+        return "kreuzer1";
+    }
+
+    if (!validateKreuzer(kreuzer[1])){
+        return "kreuzer2";
+    }
+
+    if (!validateDestroyer(destroyer[0])){
+        return "destroyer1";
+    }
+
+    if (!validateDestroyer(destroyer[1])){
+        return "destroyer2";
+    }
+
+    if (!validateDestroyer(destroyer[2])){
+        return "destroyer3";
+    }
+
+    if (!validateBoat(boat[0])){
+        return "boat1";
+    }
+
+    if (!validateBoat(boat[1])){
+        return "boat2";
+    }
+
+    if (!validateBoat(boat[2])){
+        return "boat3";
+    }
+
+    if (!validateBoat(boat[3])){
+        return "boat4";
+    }
+
+    return true;
 }
 
 export const mapShipsToPanel = (ships, panel) => {
@@ -71,7 +110,11 @@ const addPanel = ({parts}, panel) => {
     });
 }
 
-const generateShip = (ship, partSize) => {
+export const generateShip = (ship, partSize) => {
+    if (!ship){
+        return;
+    }
+
     if (ship.length !== partSize) {
         return;
     }
@@ -110,31 +153,90 @@ const part = (shipPart) => ({
     shot: shipPart.content.shot ? shipPart.content.shot : 0
 });
 
-const validateAdmiral = ({parts}) => {
-    if (parts.length !== 4){
-        throw "Amiral parts length must be 4";
+export const validateAdmiral = (ship) => {
+    if (!ship || !ship.parts || ship.parts.length !== 4) {
+        return false;
     }
-    return true;
+
+    const ii = ship.parts.map(part => part.i);
+    const jj = ship.parts.map(part => part.j);
+
+    const horizontalUp = jj[1] === jj[2] && jj[2] === jj[3]; // 0 a bak
+    const horizontalDown = jj[0] === jj[1] && jj[1] === jj[2]; // 3 e bak
+    const verticalRight = ii[0] === ii[1] && ii[1] === ii[3]; // 2 ye bak
+    const verticalLeft = ii[0] === ii[2] && ii[2] === ii[3]; // 1 e bak
+
+    if (!horizontalUp && !horizontalDown && !verticalRight && !verticalLeft) {
+        return false;
+    }
+
+    if (horizontalUp) {
+        return ii[0] === ii[2] && jj[0] === jj[2] - 1;
+    }
+
+    if (horizontalDown) {
+        return ii[1] === ii[3] && jj[1] === jj[3] - 1;
+    }
+
+    if (verticalRight || verticalRight) {
+        return jj[1] === jj[2] && ii[1] === ii[2] - 1;
+    }
+
+    return false;
 }
 
-const validateKreuzer = ({parts}) => {
-    if (parts.length !== 3){
-        throw "Kreuzer parts length must be 3";
+export const validateKreuzer = (ship) => {
+    if (!ship || !ship.parts || ship.parts.length !== 3) {
+        return false;
     }
-    return true;
+    const ii = ship.parts.map(part => part.i);
+    const jj = ship.parts.map(part => part.j);
+
+    const horizontal = jj[0] === jj[1] && jj[1] === jj[2]; // yatay
+    const vertical = ii[0] === ii[1] && ii[1] === ii[2]; // dikey
+
+    if (!horizontal && !vertical) {
+        return false;
+    }
+
+    if (horizontal) {
+        return ii[1] === ii[0] + 1 && ii[2] === ii[1] + 1;
+    }
+    if (vertical) {
+        return jj[1] === jj[0] + 1 && jj[2] === jj[1] + 1;
+    }
+
+    return false;
 }
 
-const validateDestroyer = ({parts}) => {
-    if (parts.length !== 2){
-        throw "Destroyer parts length must be 2";
+export const validateDestroyer = (ship) => {
+    if (!ship || !ship.parts || ship.parts.length !== 2) {
+        return false;
     }
-    return true;
+    const ii = ship.parts.map(part => part.i);
+    const jj = ship.parts.map(part => part.j);
+
+    const horizontal = jj[0] === jj[1]; // yatay
+    const vertical = ii[0] === ii[1]; // dikey
+
+    if (!horizontal && !vertical) {
+        return false;
+    }
+
+    if (horizontal) {
+        return ii[1] === ii[0] + 1;
+    }
+    if (vertical) {
+        return jj[1] === jj[0] + 1;
+    }
+
+    return false;
 }
 
-const validateBoat = ({parts}) => {
-    if (parts.length !== 1){
-        throw "Boat parts length must be 1";
+export const validateBoat = (ship) => {
+    if (ship && ship.parts && ship.parts.length === 1) {
+        return true;
     }
-    return true;
+    return false;
 }
 
