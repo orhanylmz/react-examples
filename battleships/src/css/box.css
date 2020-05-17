@@ -1,10 +1,11 @@
 .box {
     background-color: rgba(255, 255, 255, 0.8);
-    font-size: 1.5vw;
+    font-size: 2vh;
     font-family: "Comic Sans MS";
     width: 2.5vw;
     height: 5.0vh;
-    text-align: center;
+    padding-top: 1vh;
+    padding-left: 1vw;
 }
 
 .bordered {
