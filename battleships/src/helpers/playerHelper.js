@@ -29,52 +29,91 @@ export const mapPanelToShips = (panel) => {
     }
 }
 
-export const validateShips = (ships) => {
+export const validateShips = (ships, panel) => {
     if (!ships) {
         return;
     }
     const {admiral, kreuzer, destroyer, boat} = ships;
 
-    if (!validateAdmiral(admiral[0])){
+    if (!validateAdmiral(admiral[0])) {
         return "admiral";
     }
 
-    if (!validateKreuzer(kreuzer[0])){
+    if (!validateKreuzer(kreuzer[0])) {
         return "kreuzer1";
     }
 
-    if (!validateKreuzer(kreuzer[1])){
+    if (!validateKreuzer(kreuzer[1])) {
         return "kreuzer2";
     }
 
-    if (!validateDestroyer(destroyer[0])){
+    if (!validateDestroyer(destroyer[0])) {
         return "destroyer1";
     }
 
-    if (!validateDestroyer(destroyer[1])){
+    if (!validateDestroyer(destroyer[1])) {
         return "destroyer2";
     }
 
-    if (!validateDestroyer(destroyer[2])){
+    if (!validateDestroyer(destroyer[2])) {
         return "destroyer3";
     }
 
-    if (!validateBoat(boat[0])){
+    if (!validateBoat(boat[0])) {
         return "boat1";
     }
 
-    if (!validateBoat(boat[1])){
+    if (!validateBoat(boat[1])) {
         return "boat2";
     }
 
-    if (!validateBoat(boat[2])){
+    if (!validateBoat(boat[2])) {
         return "boat3";
     }
 
-    if (!validateBoat(boat[3])){
+    if (!validateBoat(boat[3])) {
         return "boat4";
     }
 
+    const allParts = admiral[0].parts
+        .concat((kreuzer[0].parts)).concat((kreuzer[1].parts))
+        .concat((destroyer[0].parts)).concat((destroyer[1].parts)).concat((destroyer[2].parts))
+        .concat((boat[0].parts)).concat((boat[1].parts)).concat((boat[2].parts)).concat((boat[3].parts));
+    console.log(allParts);
+
+    const errorParts = allParts.filter(part => !validatePart(part, panel));
+    console.log(errorParts);
+    return errorParts.length <= 0;
+}
+
+const validatePart = (part, panel) => {
+    if (part.j > 0) {
+        const upPart = panel[part.j - 1][part.i];
+        if (upPart.content && (upPart.content.type !== part.type || upPart.content.index !== part.index)) {
+            return false;
+        }
+    }
+
+    if (part.j < 9) {
+        const downPart = panel[part.j + 1][part.i];
+        if (downPart.content && (downPart.content.type !== part.type || downPart.content.index !== part.index)) {
+            return false;
+        }
+    }
+
+    if (part.i > 0) {
+        const leftPart = panel[part.j][part.i - 1];
+        if (leftPart.content && (leftPart.content.type !== part.type || leftPart.content.index !== part.index)) {
+            return false;
+        }
+    }
+
+    if (part.i < 9) {
+        const rightPart = panel[part.j][part.i + 1];
+        if (rightPart.content && (rightPart.content.type !== part.type || rightPart.content.index !== part.index)) {
+            return false;
+        }
+    }
     return true;
 }
 
@@ -111,7 +150,7 @@ const addPanel = ({parts}, panel) => {
 }
 
 export const generateShip = (ship, partSize) => {
-    if (!ship){
+    if (!ship) {
         return;
     }
 
