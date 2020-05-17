@@ -135,7 +135,7 @@ class GamePageInitial extends Component {
 
     onClickNextStep = () => {
         const ships = mapPanelToShips(this.state.panel);
-        const validate = validateShips(ships);
+        const validate = validateShips(ships, this.state.panel);
         if (validate !== true){
             console.log(validate);
             return;

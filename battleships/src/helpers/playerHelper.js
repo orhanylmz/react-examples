@@ -79,11 +79,8 @@ export const validateShips = (ships, panel) => {
         .concat((kreuzer[0].parts)).concat((kreuzer[1].parts))
         .concat((destroyer[0].parts)).concat((destroyer[1].parts)).concat((destroyer[2].parts))
         .concat((boat[0].parts)).concat((boat[1].parts)).concat((boat[2].parts)).concat((boat[3].parts));
-    console.log(allParts);
 
-    const errorParts = allParts.filter(part => !validatePart(part, panel));
-    console.log(errorParts);
-    return errorParts.length <= 0;
+    return allParts.filter(part => !validatePart(part, panel)).length <= 0;
 }
 
 const validatePart = (part, panel) => {
