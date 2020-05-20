@@ -14,15 +14,20 @@ import thunk from "redux-thunk";
 import logger from 'redux-logger';
 
 import Firebase, {FirebaseContext} from './firebase';
+import {BrowserRouter} from "react-router-dom";
+
+import {createBrowserHistory} from 'history';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, logger)))
 
 ReactDOM.render(
     <React.StrictMode>
         <FirebaseContext.Provider value={new Firebase()}>
-            <Provider store={store}>
-                <App/>
-            </Provider>
+            <BrowserRouter history={createBrowserHistory()}>
+                <Provider store={store}>
+                    <App/>
+                </Provider>
+            </BrowserRouter>
         </FirebaseContext.Provider>
     </React.StrictMode>,
     document.getElementById('root')

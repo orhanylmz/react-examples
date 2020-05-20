@@ -9,8 +9,7 @@ class GamePageLoading extends Component {
     state = {
         games: null,
         gameId: null,
-        whoAmI: null,
-        goToNextStep: false
+        whoAmI: null
     }
 
     componentDidMount() {
@@ -39,53 +38,8 @@ class GamePageLoading extends Component {
         });
     };
 
-    createGame = () => {
-        const self = this;
-        this.props.firebase.games().add({
-            player1: {
-                name: this.props.name,
-                surname: this.props.surname,
-                ships: this.props.ships
-            },
-            state: "waiting"
-        }).then(function (docRef) {
-            self.setState({
-                gameId: docRef.id,
-                whoAmI: "player1",
-                goToNextStep: true
-            })
-        }).catch(function (error) {
-            console.error("Error adding document: ", error);
-        });
-    }
-
-    joinGame = () => {
-        const self = this;
-        const {gameId} = this.state;
-        this.props.firebase.games().doc(gameId).update({
-            player2: {
-                name: this.props.name,
-                surname: this.props.surname,
-                ships: this.props.ships
-            },
-            currentPlayer: "player1",
-            state: "started"
-        }).then(function (docRef) {
-            self.setState({
-                whoAmI: "player2",
-                goToNextStep: true
-            })
-        }).catch(function (error) {
-            console.error("Error adding document: ", error);
-        });
-    }
-
     render() {
-        const {games, gameId, goToNextStep, whoAmI} = this.state;
-
-        if (goToNextStep) {
-            this.props.nextStep(gameId, whoAmI);
-        }
+        const {games, gameId, whoAmI} = this.state;
 
         return (
             <div>
@@ -93,13 +47,13 @@ class GamePageLoading extends Component {
                        selectedGameId={this.state.gameId}/>
                 <FooterButton
                     left
-                    onClick={this.createGame}
+                    onClick={this.props.createGame}
                     value={"Create Game"}
                 />
                 <FooterButton
                     right
                     disabled={!gameId}
-                    onClick={this.joinGame}
+                    onClick={() => this.props.joinGame(gameId)}
                     value={"Join Game"}
                 />
             </div>
