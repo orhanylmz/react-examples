@@ -4,6 +4,9 @@ import FooterButton from "./FooterButton";
 import Games from "./Games";
 
 import {withFirebase} from "../firebase";
+import {Button, Grid} from "semantic-ui-react";
+import Panel from "./Panel";
+import Ships from "./Ships";
 
 class GamePageLoading extends Component {
     state = {
@@ -42,21 +45,32 @@ class GamePageLoading extends Component {
         const {games, gameId, whoAmI} = this.state;
 
         return (
-            <div>
-                <Games games={games} handleGameSelected={this.handleGameSelected}
-                       selectedGameId={this.state.gameId}/>
-                <FooterButton
-                    left
-                    onClick={this.props.createGame}
-                    value={"Create Game"}
-                />
-                <FooterButton
-                    right
-                    disabled={!gameId}
-                    onClick={() => this.props.joinGame(gameId)}
-                    value={"Join Game"}
-                />
-            </div>
+            <Grid>
+                <Grid.Row columns={1} stretched={true} style={{height: 500}}>
+                    <Grid.Column verticalAlign={"top"}>
+                        <Games games={games} handleGameSelected={this.handleGameSelected}
+                               selectedGameId={this.state.gameId}/>
+                    </Grid.Column>
+                </Grid.Row>
+
+                <Grid.Row columns={2} stretched={true}>
+                    <Grid.Column verticalAlign={"middle"}>
+                        <Button
+                            left
+                            onClick={this.props.createGame}
+                            content={"Create Game"}
+                        />
+                    </Grid.Column>
+                    <Grid.Column verticalAlign={"middle"}>
+                        <Button
+                            right
+                            disabled={!gameId}
+                            onClick={() => this.props.joinGame(gameId)}
+                            content={"Join Game"}
+                        />
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         );
     }
 };

@@ -8,7 +8,7 @@ import {createPanel} from "../helpers/panelHelper";
 import {ADMIRAL, BOAT, DESTROYER, KREUZER, LOADED, tempShips} from "../helpers/shipHelper";
 
 import {mapPanelToShips, validateShips, generateShip} from "../helpers/playerHelper";
-import {Button} from "semantic-ui-react";
+import {Grid, Button} from "semantic-ui-react";
 
 class GamePageInitial extends Component {
     state = {
@@ -136,7 +136,7 @@ class GamePageInitial extends Component {
     onClickNextStep = () => {
         const ships = mapPanelToShips(this.state.panel);
         const validate = validateShips(ships, this.state.panel);
-        if (validate !== true){
+        if (validate !== true) {
             console.log(validate);
             return;
         }
@@ -147,25 +147,34 @@ class GamePageInitial extends Component {
         const {done, tempShips, panel} = this.state;
 
         return (
-            <div>
-                <div className={"grid grid-2"}>
-                    <Panel
-                        panel={panel}
-                        onClick={this.onClickPanel}
-                        onRightClick={this.onRightClickPanel}
-                    />
-                    <Ships
-                        ships={tempShips}
-                        onClick={this.onClickShip}
-                        onRightClick={this.onRightClickShip}
-                    />
-                </div>
-                <FooterButton
-                    onClick={this.onClickNextStep}
-                    disabled={!done}
-                    value={"Next"}
-                />
-            </div>
+            <Grid>
+                <Grid.Row columns={2} stretched={true}>
+                    <Grid.Column verticalAlign={"middle"}>
+                        <Panel
+                            panel={panel}
+                            onClick={this.onClickPanel}
+                            onRightClick={this.onRightClickPanel}
+                        />
+                    </Grid.Column>
+                    <Grid.Column verticalAlign={"middle"}>
+                        <Ships
+                            ships={tempShips}
+                            onClick={this.onClickShip}
+                            onRightClick={this.onRightClickShip}
+                        />
+                    </Grid.Column>
+                </Grid.Row>
+
+                <Grid.Row columns={1} stretched={true}>
+                    <Grid.Column verticalAlign={"middle"}>
+                        <Button
+                            onClick={this.onClickNextStep}
+                            disabled={!done}
+                            content={"Next"}
+                        />
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         );
     }
 };

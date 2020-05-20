@@ -11,7 +11,7 @@ import {Segment} from "semantic-ui-react";
 
 class GamePage extends Component {
     state = {
-        step: 1,
+        step: 2,
         ships: null,
         gameId: "du25WA9Ze79NiVepjJt5",
         whoAmI: "player2"
