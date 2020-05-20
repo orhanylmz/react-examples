@@ -10,7 +10,6 @@ class Games extends Component {
     render() {
         return (
             <div>
-                <h1>Games</h1>
                 <GameTable handleGameSelected={this.props.handleGameSelected}
                            selectedGameId={this.props.selectedGameId}
                            games={this.props.games}

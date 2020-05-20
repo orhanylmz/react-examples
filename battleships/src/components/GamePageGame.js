@@ -10,6 +10,8 @@ import {mapPanelToShips} from "../helpers/playerHelper";
 import {mapShipsToPanel} from "../helpers/playerHelper";
 import {withFirebase} from "../firebase";
 
+import {Grid} from "semantic-ui-react";
+
 class GamePageGame extends Component {
     state = {
         minePanel: null, //away Ships
@@ -155,11 +157,19 @@ class GamePageGame extends Component {
             ships = mapPanelToShips(minePanel);
         }
         return (
-            <div className={"grid grid-3"}>
-                <Panel panel={minePanel} loading={minePanel === null} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel} onlyShot={true}/>
-                <ActionPanel enableShot={enableShot} shot={this.shot} order={playOrder} ships={ships}/>
-                <Panel panel={awayPanel}/>
-            </div>
+            <Grid>
+                <Grid.Row columns={3} stretched={true}>
+                    <Grid.Column verticalAlign={"top"}>
+                        <Panel panel={minePanel} loading={minePanel === null} onClick={this.onClickPanel} onRightClick={this.onRightClickPanel} onlyShot={true}/>
+                    </Grid.Column>
+                    <Grid.Column verticalAlign={"top"}>
+                        <ActionPanel enableShot={enableShot} shot={this.shot} order={playOrder} ships={ships}/>
+                    </Grid.Column>
+                    <Grid.Column verticalAlign={"top"}>
+                        <Panel panel={awayPanel}/>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         );
     }
 };
