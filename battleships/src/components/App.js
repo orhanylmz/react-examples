@@ -28,14 +28,12 @@ class App extends Component {
     render() {
         const {currentUser} = this.props.firebase.auth;
         return (
-            <Segment >
+            <Segment>
                 {!!currentUser ? <Header onSignOut={this.onSignOut}/> : null}
-                <Segment basic={true}>
-                    <Route path={HOME} exact component={HomePage}/>
-                    <Route path={SIGNIN} exact component={SignInPage}/>
-                    <Route path={SIGNUP} exact component={SignUpPage}/>
-                    <Route path={GAME} exact component={GamePage}/>
-                </Segment>
+                <Route path={HOME} exact component={HomePage}/>
+                <Route path={SIGNIN} exact component={SignInPage}/>
+                <Route path={SIGNUP} exact component={SignUpPage}/>
+                <Route path={GAME} exact component={GamePage}/>
                 {!!currentUser ? <Footer/> : null}
             </Segment>
         );

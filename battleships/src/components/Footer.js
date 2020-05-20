@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container, Image, List, Segment} from "semantic-ui-react";
-import icon from "../media/battleship-icon.svg";
+import icon from "../media/battleship-icon-white.svg";
 
 const Footer = props => {
     return (

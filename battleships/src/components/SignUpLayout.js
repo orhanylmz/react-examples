@@ -5,17 +5,18 @@ import icon from "../media/battleship-icon.svg";
 import { Field, reduxForm } from "redux-form";
 
 import {withFirebase} from "../firebase";
+import {SIGNUP} from "../helpers/pathHelper";
 
 class SignUpLayout extends Component {
     render() {
         const { handleSubmit, reset } = this.props;
 
         return (
-            <Grid textAlign='center' style={{height: '100vh'}} verticalAlign='middle'>
-                <Grid.Column style={{maxWidth: 450}}>
+            <Grid style={{height: '100vh'}} className={"app"}>
+                <Grid.Column style={{maxWidth: 450, marginRight:200, marginTop:100}} floated={"right"} verticalAlign={"top"} stretched={true}>
                     <Header as={Image} size={"massive"} image={icon} />
                     <Form size='large' onSubmit={handleSubmit}>
-                        <Segment stacked>
+                        <Segment style={{backgroundColor: "transparent"}}>
                             <Field
                                 component={Form.Input}
                                 name="email"
@@ -55,8 +56,8 @@ class SignUpLayout extends Component {
                             />
 
                             <Form.Group grouped>
-                                <Form.Button primary fluid size='large' color='teal'>Sign Up</Form.Button>
-                                <Form.Button onClick={reset} fluid size='large'>Reset</Form.Button>
+                                <Form.Button fluid size='large' color='black' style={{opacity: "0.7"}}>Sign Up</Form.Button>
+                                <Form.Button fluid onClick={reset} size='large' style={{opacity: "0.7"}}>Reset</Form.Button>
                             </Form.Group>
                         </Segment>
                     </Form>

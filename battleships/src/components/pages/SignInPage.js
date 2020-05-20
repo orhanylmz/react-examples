@@ -4,10 +4,10 @@ import {connect} from "react-redux";
 import {withFirebase} from "../../firebase";
 import SignInLayout from "../SignInLayout";
 import {GAME, HOME} from "../../helpers/pathHelper";
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 
-class SignInPage extends Component{
+class SignInPage extends Component {
     onSubmit = () => {
         console.log(this.props)
         const {email, password} = this.props.values;
@@ -19,13 +19,11 @@ class SignInPage extends Component{
     render() {
         return (
             <SignInLayout onSubmit={this.onSubmit}/>
-        );;
+        );
     }
 };
 
-SignInPage.propTypes = {
-    
-};
+SignInPage.propTypes = {};
 
 const mapStateToProps = state => {
     return state.form.signIn
