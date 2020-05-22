@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Button, Form, Grid, Header, Image, Message, Segment} from "semantic-ui-react";
 import icon from "../media/battleship-icon.svg";
 
+import {Link, NavLink} from "react-router-dom";
+
 import {withFirebase} from "../firebase";
 import {Field, reduxForm} from "redux-form";
 import ship from "../media/ship.jpg"
@@ -38,7 +40,9 @@ class SignInLayout extends Component {
 
                             <Form.Group grouped>
                                 <Form.Button fluid size='large' color='black' style={{opacity: "0.7"}} onClick={handleSubmit}>Sign In</Form.Button>
-                                <Form.Button fluid style={{opacity: "0.7"}}><a href={SIGNUP}>Sign Up</a></Form.Button>
+                                <Form.Field as={Link} to={SIGNUP}>
+                                    <Form.Button fluid exact style={{opacity: "0.7"}}>Sign Up</Form.Button>
+                                </Form.Field>
                             </Form.Group>
                         </Segment>
                     </Form>

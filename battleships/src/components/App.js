@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import Header from "./Header";
 import Footer from "./Footer";
 
-import {Route} from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
 
 import {HOME, SIGNIN, SIGNUP, GAME} from "../helpers/pathHelper";
 
@@ -29,6 +29,7 @@ class App extends Component {
                 <Route path={SIGNIN} exact component={SignInPage}/>
                 <Route path={SIGNUP} exact component={SignUpPage}/>
                 <Route path={GAME} exact component={GamePage}/>
+                <Route render={() => (<Redirect to={HOME}/>)}></Route>
                 <Footer/>
             </Segment>
         );
