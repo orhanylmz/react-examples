@@ -11,13 +11,13 @@ import {SIGNUP} from "../helpers/pathHelper";
 
 class SignInLayout extends Component {
     render() {
-        const { handleSubmit, reset } = this.props;
+        const { handleSubmit } = this.props;
 
         return (
             <Grid style={{height: '100vh'}} className={"app"}>
                 <Grid.Column style={{maxWidth: 450, marginRight:200, marginTop:100}} floated={"right"} verticalAlign={"top"}>
                     <Header as={Image} size={"massive"} image={icon} />
-                    <Form size='large' onSubmit={handleSubmit}>
+                    <Form size='large'>
                         <Segment style={{backgroundColor: "transparent"}}>
                             <Field
                                 component={Form.Input}
@@ -37,7 +37,7 @@ class SignInLayout extends Component {
                             />
 
                             <Form.Group grouped>
-                                <Form.Button fluid size='large' color='black' style={{opacity: "0.7"}}>Sign In</Form.Button>
+                                <Form.Button fluid size='large' color='black' style={{opacity: "0.7"}} onClick={handleSubmit}>Sign In</Form.Button>
                                 <Form.Button fluid style={{opacity: "0.7"}}><a href={SIGNUP}>Sign Up</a></Form.Button>
                             </Form.Group>
                         </Segment>

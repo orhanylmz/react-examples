@@ -100,4 +100,4 @@ GamePage.propTypes = {};
 
 const authCondition = authUser => !!authUser;
 
-export default withAuthorization(authCondition)(GamePage);
+export default withAuthorization(authCondition)(authCondition)(GamePage);

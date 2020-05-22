@@ -10,21 +10,6 @@ class SignUpPage extends Component {
         const {email, password, firstName, lastName} = this.props.values;
         this.props.firebase.doCreateUserWithEmailAndPassword(email, password)
             .then(authUser => {
-                // Create a user in your Firebase realtime database
-                // this.props.firebase
-                //     .user(authUser.user.uid)
-                //     .set({
-                //         displayName: firstName + " " + lastName,
-                //         firstName,
-                //         lastName,
-                //         photoURL: "https://example.com/jane-q-user/profile.jpg"
-                //     })
-                //     .then(() => {
-                //         this.props.history.push(HOME);
-                //     })
-                //     .catch(error => {
-                //         this.setState({error});
-                //     });
                 this.props.firebase.auth.currentUser.updateProfile({
                             displayName: firstName + " " + lastName,
                             photoURL: "https://example.com/jane-q-user/profile.jpg"

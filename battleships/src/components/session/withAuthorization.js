@@ -6,12 +6,12 @@ import AuthUserContext from './context';
 import {withFirebase} from '../../firebase';
 import {HOME, SIGNIN, SIGNUP} from "../../helpers/pathHelper";
 
-const withAuthorization = condition => Component => {
+const withAuthorization = displayCondition => forwardCondition => Component => {
     class WithAuthorization extends React.Component {
         componentDidMount() {
             this.listener = this.props.firebase.auth.onAuthStateChanged(
                 authUser => {
-                    if (!condition(authUser)) {
+                    if (!forwardCondition(authUser)) {
                         this.props.history.push(SIGNIN);
                     }
                 }
@@ -27,7 +27,7 @@ const withAuthorization = condition => Component => {
                 <AuthUserContext.Consumer>
                     {
                         authUser =>
-                            condition(authUser)
+                            displayCondition(authUser)
                                 ? (<Component {...this.props}/>)
                                 : null
                     }

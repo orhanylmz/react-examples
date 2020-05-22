@@ -15,7 +15,7 @@ class SignUpLayout extends Component {
             <Grid style={{height: '100vh'}} className={"app"}>
                 <Grid.Column style={{maxWidth: 450, marginRight:200, marginTop:100}} floated={"right"} verticalAlign={"top"} stretched={true}>
                     <Header as={Image} size={"massive"} image={icon} />
-                    <Form size='large' onSubmit={handleSubmit}>
+                    <Form size='large'>
                         <Segment style={{backgroundColor: "transparent"}}>
                             <Field
                                 component={Form.Input}
@@ -56,7 +56,7 @@ class SignUpLayout extends Component {
                             />
 
                             <Form.Group grouped>
-                                <Form.Button fluid size='large' color='black' style={{opacity: "0.7"}}>Sign Up</Form.Button>
+                                <Form.Button fluid size='large' color='black' style={{opacity: "0.7"}} onClick={handleSubmit}>Sign Up</Form.Button>
                                 <Form.Button fluid onClick={reset} size='large' style={{opacity: "0.7"}}>Reset</Form.Button>
                             </Form.Group>
                         </Segment>

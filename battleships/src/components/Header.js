@@ -8,6 +8,7 @@ import icon from "../media/battleship-icon.svg";
 import {HOME, GAME} from "../helpers/pathHelper";
 
 import {withFirebase} from "../firebase";
+import {withAuthorization} from "./session";
 
 class Header extends Component {
     state = {
@@ -17,8 +18,10 @@ class Header extends Component {
 
     render() {
         const {menuFixed} = this.state;
-        const {onSignOut} = this.props;
-        const {displayName} = this.props.firebase.auth.currentUser;
+        let displayName = null;
+        if (this.props.firebase.auth && this.props.firebase.auth.currentUser) {
+            displayName = this.props.firebase.auth.currentUser.displayName;
+        }
 
         return (
             <Menu
@@ -40,7 +43,7 @@ class Header extends Component {
                             <Dropdown.Menu>
                                 <Dropdown.Item>Account Settings</Dropdown.Item>
                                 <Dropdown.Divider />
-                                <Dropdown.Item onClick={onSignOut}>Sign Out</Dropdown.Item>
+                                <Dropdown.Item onClick={() => this.props.firebase.doSignOut()}>Sign Out</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Menu.Menu>
@@ -52,4 +55,6 @@ class Header extends Component {
 
 Header.propTypes = {};
 
-export default withFirebase(Header);
+const authCondition = authUser => !!authUser;
+
+export default withAuthorization(authCondition)(authUser => true)(Header);

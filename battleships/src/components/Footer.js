@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container, Image, List, Segment} from "semantic-ui-react";
 import icon from "../media/battleship-icon-white.svg";
+import {withAuthorization} from "./session";
 
 const Footer = props => {
     return (
@@ -28,5 +29,8 @@ const Footer = props => {
     );
 };
 
-export default Footer;
+const authCondition = authUser => !!authUser;
+
+export default withAuthorization(authCondition)(authUser => true)(Footer);
+
 
